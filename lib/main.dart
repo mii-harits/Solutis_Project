@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:solutis_project/view/Authentication/login_screen.dart';
-// import 'package:solutis_project/view/splash_screen.dart';
+import 'package:solutis_project/database/preference.dart';
+import 'package:solutis_project/view/Authentication/splash_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await PreferenceHandler().init();
   runApp(const MyApp());
 }
 
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: LoginScreen(),
+      home: SplashScreen(),
     );
   }
 }

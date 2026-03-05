@@ -11,7 +11,7 @@ class BackgroundScreen extends StatelessWidget {
         Container(decoration: BoxDecoration(color: AppColor.white)),
         Positioned(
           top: -290,
-          left: -680,
+          left: -730,
           child: Container(
             width: 1000,
             height: 1000,
@@ -28,7 +28,7 @@ class BackgroundScreen extends StatelessWidget {
         ),
         Positioned(
           bottom: -290,
-          right: -680,
+          right: -730,
           child: Container(
             width: 1000,
             height: 1000,
