@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/database/preference.dart';
 import 'package:solutis_project/extension/navigator.dart';
+import 'package:solutis_project/utils/navigation_bar.dart';
 import 'package:solutis_project/view/Authentication/login_screen.dart';
-import 'package:solutis_project/view/Home_Screen/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,11 +20,11 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void autoLogin() async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 5));
     bool? data = await PreferenceHandler.getIsLogin();
     print(data);
     if (data == true) {
-      context.pushAndRemoveAll(HomeScreen());
+      context.pushAndRemoveAll(NavBarWidget());
     } else {
       context.pushAndRemoveAll(LoginScreen());
     }

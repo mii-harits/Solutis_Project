@@ -21,9 +21,6 @@ class PreferenceHandler {
     var data = prefs.getBool(_isLogin);
     return data;
   }
-  // Future<void> getIsLogin() async {
-  //   _preferences.getBool(_isLogin);
-  // }
 
   Future<void> deleteIsLogin() async {
     _preferences.remove(_isLogin);

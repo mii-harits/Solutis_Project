@@ -174,25 +174,28 @@ class _LoginScreenState extends State<LoginScreen> {
                               shadowColor: Colors.transparent,
                             ),
                             onPressed: () async {
-                              final UserModel? login = await DBHelper.loginUser(
-                                email: emailController.text,
-                                password: passwordController.text,
-                              );
-                              if (login != null) {
-                                PreferenceHandler().storingIsLogin(true);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text("Login Berhasil")),
-                                );
-                                await Future.delayed(Duration(seconds: 2));
-                                context.push(HomeScreen());
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      "Login gagal, email atau password salah",
+                              if (_formKey.currentState!.validate()) {
+                                final UserModel? login =
+                                    await DBHelper.loginUser(
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                    );
+                                if (login != null) {
+                                  PreferenceHandler().storingIsLogin(true);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text("Login Berhasil")),
+                                  );
+                                  await Future.delayed(Duration(seconds: 2));
+                                  context.push(HomeScreen());
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        "Login gagal, email atau password salah",
+                                      ),
                                     ),
-                                  ),
-                                );
+                                  );
+                                }
                               }
                             },
                             child: Stack(
