@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:solutis_project/constant/app_color.dart';
 
@@ -68,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                             ),
                             child: SvgPicture.asset(
-                              "assets/icons/Notification.svg",
+                              "assets/icons/Home Icon/Notification.svg",
                               width: 15,
                               height: 15,
                               fit: BoxFit.scaleDown,
@@ -219,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Row(
                               children: [
                                 SvgPicture.asset(
-                                  "assets/icons/Stethoscope.svg",
+                                  "assets/icons/Home Icon/Stethoscope.svg",
                                 ),
 
                                 SizedBox(width: 12),
@@ -272,7 +271,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                         child: SvgPicture.asset(
-                          "assets/icons/Heartbeat.svg",
+                          "assets/icons/Home Icon/Heartbeat.svg",
                           fit: BoxFit.scaleDown,
                         ),
                       ),
@@ -305,7 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         children: [
                           SvgPicture.asset(
-                            "assets/icons/History.svg",
+                            "assets/icons/Home Icon/History.svg",
                             height: 33,
                             width: 33,
                           ),
@@ -349,7 +348,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: AppColor.lightBlue.withOpacity(0.7),
                             ),
                             child: SvgPicture.asset(
-                              "assets/icons/Heart.svg",
+                              "assets/icons/Home Icon/Heart.svg",
                               fit: BoxFit.scaleDown,
                             ),
                           ),
@@ -374,7 +373,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: AppColor.lightBlue.withOpacity(0.7),
                             ),
                             child: SvgPicture.asset(
-                              "assets/icons/Medicine.svg",
+                              "assets/icons/Home Icon/Medicine.svg",
                               fit: BoxFit.scaleDown,
                             ),
                           ),
@@ -410,7 +409,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Row(
                         children: [
-                          SvgPicture.asset("assets/icons/Book.svg"),
+                          SvgPicture.asset("assets/icons/Home Icon/Book.svg"),
 
                           SizedBox(width: 12),
 
@@ -455,7 +454,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SvgPicture.asset(
-                                  "assets/icons/Heartbeat.svg",
+                                  "assets/icons/Home Icon/Heartbeat.svg",
                                   color: AppColor.teal,
                                   height: 25,
                                   width: 25,
@@ -482,7 +481,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SvgPicture.asset(
-                                  "assets/icons/Heart.svg",
+                                  "assets/icons/Home Icon/Heart.svg",
                                   color: AppColor.blue,
                                   height: 25,
                                   width: 25,
@@ -509,7 +508,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SvgPicture.asset(
-                                  "assets/icons/Medicine.svg",
+                                  "assets/icons/Home Icon/Medicine.svg",
                                   color: AppColor.purple2,
                                   height: 25,
                                   width: 25,
