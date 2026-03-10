@@ -6,8 +6,8 @@ import 'package:solutis_project/extension/navigator.dart';
 import 'package:solutis_project/models/user_model.dart';
 import 'package:solutis_project/utils/background.dart';
 import 'package:solutis_project/utils/input_decoration.dart';
+import 'package:solutis_project/utils/navigation_bar.dart';
 import 'package:solutis_project/view/Authentication/register_screen.dart';
-import 'package:solutis_project/view/Home_Screen/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -186,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     SnackBar(content: Text("Login Berhasil")),
                                   );
                                   await Future.delayed(Duration(seconds: 2));
-                                  context.push(HomeScreen());
+                                  context.push(NavBarWidget());
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
