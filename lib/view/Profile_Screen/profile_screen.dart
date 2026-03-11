@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/database/preference.dart';
 import 'package:solutis_project/extension/navigator.dart';
+import 'package:solutis_project/utils/box_decoration.dart';
 import 'package:solutis_project/view/Authentication/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
             child: Column(
               children: [
                 Row(
@@ -46,17 +47,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                 Container(
                   padding: EdgeInsets.all(20.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: AppColor.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 18,
-                        offset: Offset(0, 10),
-                      ),
-                    ],
-                  ),
+                  decoration: boxDecorationConstant(),
                   child: Column(
                     children: [
                       Row(
@@ -152,17 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     left: 22,
                     right: 22,
                   ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: AppColor.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 18,
-                        offset: Offset(0, 10),
-                      ),
-                    ],
-                  ),
+                  decoration: boxDecorationConstant(),
                   child: Column(
                     children: [
                       Row(
@@ -508,17 +489,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                 Container(
                   padding: EdgeInsets.all(22.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: AppColor.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 18,
-                        offset: Offset(0, 10),
-                      ),
-                    ],
-                  ),
+                  decoration: boxDecorationConstant(),
                   child: Column(
                     children: [
                       Row(

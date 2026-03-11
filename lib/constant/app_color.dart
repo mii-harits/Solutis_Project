@@ -12,6 +12,9 @@ class AppColor {
   static const Color blue = Color(0xff0000FF);
   static const Color blue2 = Color(0xff008FE8);
 
+  static const Color green = Color(0xff3AE380);
+  static const Color green2 = Color(0xff0B9373);
+
   static const Color white = Color(0xffffffff);
 
   static const Color grey1 = Color(0xff575252);
@@ -35,4 +38,11 @@ class AppColor {
 
   static const Color realRed = Color(0xffFF0000);
   static const Color realRed2 = Color(0xffC20404);
+
+  static const Color indicationGreen = Color(0xff00FF0D);
+  static const Color indicationGreen2 = Color(0xff11A719);
+  static const Color indicationOrange = Color(0xffFFCC00);
+  static const Color indicationOrange2 = Color(0xffD27E00);
+  static const Color indicationRed = Color(0xffEA0000);
+  static const Color indicationRed2 = Color(0xffEA0000);
 }

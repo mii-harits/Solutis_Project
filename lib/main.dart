@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:solutis_project/database/preference.dart';
-import 'package:solutis_project/view/Education_Screen/education_screen.dart';
+import 'package:solutis_project/view/Authentication/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: EducationScreen(),
+      home: SplashScreen(),
     );
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:solutis_project/constant/app_color.dart';
+import 'package:solutis_project/extension/navigator.dart';
+import 'package:solutis_project/utils/box_decoration.dart';
+import 'package:solutis_project/view/History_Screen/history_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -190,24 +193,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     top: 15,
                     bottom: 25,
                   ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    gradient: LinearGradient(
-                      colors: [
-                        AppColor.teal.withOpacity(0.9),
-                        AppColor.teal3.withOpacity(0.5),
-                        AppColor.teal4.withOpacity(0.9),
-                      ],
-                      begin: Alignment(-0.2, -1),
-                      end: Alignment(0.3, 1),
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColor.teal3.withOpacity(0.5),
-                        blurRadius: 10,
-                        offset: Offset(0, 5),
-                      ),
-                    ],
+                  decoration: secondBoxDecorationConstant(
+                    begin: Alignment(-0.2, -1),
+                    end: Alignment(0.3, 1),
                   ),
                   child: Row(
                     children: [
@@ -288,17 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     top: 15,
                     bottom: 22,
                   ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: AppColor.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 10,
-                        offset: Offset(0, 4),
-                      ),
-                    ],
-                  ),
+                  decoration: boxDecorationConstant(),
                   child: Column(
                     children: [
                       Row(
@@ -394,17 +372,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     top: 18,
                     bottom: 22,
                   ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: AppColor.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 10,
-                        offset: Offset(0, 4),
-                      ),
-                    ],
-                  ),
+                  decoration: boxDecorationConstant(),
                   child: Column(
                     children: [
                       Row(

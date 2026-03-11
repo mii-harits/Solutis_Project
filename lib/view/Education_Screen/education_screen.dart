@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:solutis_project/constant/app_color.dart';
-import 'package:solutis_project/utils/input_decoration.dart';
+import 'package:solutis_project/view/Education_Screen/lifestyle_category_screen.dart';
+import 'package:solutis_project/view/Education_Screen/obat_category_screen.dart';
+import 'package:solutis_project/view/Education_Screen/penyakit_category_screen.dart';
 
 class EducationScreen extends StatefulWidget {
   const EducationScreen({super.key});
@@ -13,6 +15,12 @@ class EducationScreen extends StatefulWidget {
 class _EducationScreenState extends State<EducationScreen> {
   int selectedIndex = 0;
 
+  final List<Widget> categoryScreen = [
+    LifestyleCategoryScreen(),
+    PenyakitCategoryScreen(),
+    ObatCategoryScreen(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,30 +28,63 @@ class _EducationScreenState extends State<EducationScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
             child: Column(
               children: [
                 Row(
                   children: [
-                    SvgPicture.asset("assets/icons/Home Icon/Book.svg"),
-                    SizedBox(width: 10),
-                    Text("Edukasi Kesehatan"),
+                    SvgPicture.asset(
+                      "assets/icons/Home Icon/Book.svg",
+                      height: 35,
+                      width: 35,
+                    ),
+
+                    SizedBox(width: 28),
+
+                    Text(
+                      "Edukasi Kesehatan",
+                      style: TextStyle(fontSize: 22, color: AppColor.teal),
+                    ),
                   ],
                 ),
 
-                SizedBox(height: 10),
+                SizedBox(height: 12),
 
-                Text("Wawasan lengkap untuk kendali kesehatan penuh. ✨"),
+                Text(
+                  "Wawasan lengkap untuk kendali kesehatan penuh. ✨",
+                  style: TextStyle(fontSize: 16),
+                ),
 
-                SizedBox(height: 10),
+                SizedBox(height: 15),
 
-                TextField(
-                  decoration: decorationConstant(
-                    hintText: "Cari Topik Kesehatan....",
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: AppColor.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 4,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: "Cari Topik Kesehatanmu....",
+                      hintStyle: TextStyle(color: AppColor.grey2),
+                      prefixIcon: Icon(Icons.search, color: AppColor.grey2),
+                      contentPadding: EdgeInsets.symmetric(vertical: 8),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25),
+                        borderSide: BorderSide.none,
+                      ),
+                    ),
                   ),
                 ),
 
-                SizedBox(height: 10),
+                SizedBox(height: 20),
 
                 LayoutBuilder(
                   builder: (context, constraints) {
@@ -51,7 +92,7 @@ class _EducationScreenState extends State<EducationScreen> {
 
                     return Container(
                       width: double.infinity,
-                      height: 40,
+                      height: 35,
                       decoration: BoxDecoration(
                         color: AppColor.white,
                         borderRadius: BorderRadius.circular(20),
@@ -71,7 +112,7 @@ class _EducationScreenState extends State<EducationScreen> {
                             left: (width / 3) * selectedIndex,
                             child: Container(
                               width: width / 3,
-                              height: 40,
+                              height: 35,
                               padding: EdgeInsets.all(2.5),
                               child: Container(
                                 decoration: BoxDecoration(
@@ -92,8 +133,6 @@ class _EducationScreenState extends State<EducationScreen> {
 
                           Row(
                             children: [
-                              SizedBox(width: 10),
-
                               Expanded(
                                 child: InkWell(
                                   borderRadius: BorderRadius.circular(20),
@@ -104,9 +143,17 @@ class _EducationScreenState extends State<EducationScreen> {
                                   },
                                   child: Center(
                                     child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         SvgPicture.asset(
                                           "assets/icons/Home Icon/Heartbeat.svg",
+                                          height: 21,
+                                          width: 21,
+                                          color: selectedIndex == 0
+                                              ? AppColor.white
+                                              : AppColor.teal,
                                         ),
 
                                         SizedBox(width: 8),
@@ -115,7 +162,7 @@ class _EducationScreenState extends State<EducationScreen> {
                                           "Lifestyle",
                                           style: TextStyle(
                                             color: selectedIndex == 0
-                                                ? Colors.white
+                                                ? AppColor.white
                                                 : Colors.black,
                                             fontWeight: selectedIndex == 0
                                                 ? FontWeight.bold
@@ -138,9 +185,17 @@ class _EducationScreenState extends State<EducationScreen> {
                                   },
                                   child: Center(
                                     child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         SvgPicture.asset(
                                           "assets/icons/Home Icon/Heart.svg",
+                                          height: 21,
+                                          width: 21,
+                                          color: selectedIndex == 1
+                                              ? AppColor.white
+                                              : AppColor.teal,
                                         ),
 
                                         SizedBox(width: 8),
@@ -149,7 +204,7 @@ class _EducationScreenState extends State<EducationScreen> {
                                           "Penyakit",
                                           style: TextStyle(
                                             color: selectedIndex == 1
-                                                ? Colors.white
+                                                ? AppColor.white
                                                 : Colors.black,
                                             fontWeight: selectedIndex == 1
                                                 ? FontWeight.bold
@@ -172,9 +227,17 @@ class _EducationScreenState extends State<EducationScreen> {
                                   },
                                   child: Center(
                                     child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         SvgPicture.asset(
                                           "assets/icons/Home Icon/Medicine.svg",
+                                          height: 21,
+                                          width: 21,
+                                          color: selectedIndex == 2
+                                              ? AppColor.white
+                                              : AppColor.teal,
                                         ),
 
                                         SizedBox(width: 8),
@@ -183,7 +246,7 @@ class _EducationScreenState extends State<EducationScreen> {
                                           "Obat",
                                           style: TextStyle(
                                             color: selectedIndex == 2
-                                                ? Colors.white
+                                                ? AppColor.white
                                                 : Colors.black,
                                             fontWeight: selectedIndex == 2
                                                 ? FontWeight.bold
@@ -202,6 +265,10 @@ class _EducationScreenState extends State<EducationScreen> {
                     );
                   },
                 ),
+
+                SizedBox(height: 25),
+
+                categoryScreen[selectedIndex],
               ],
             ),
           ),
