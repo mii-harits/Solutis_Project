@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:solutis_project/database/preference.dart';
 import 'package:solutis_project/view/Authentication/splash_screen.dart';
+import 'package:solutis_project/database/preference.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

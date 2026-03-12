@@ -43,6 +43,10 @@ class AppColor {
   static const Color indicationGreen2 = Color(0xff11A719);
   static const Color indicationOrange = Color(0xffFFCC00);
   static const Color indicationOrange2 = Color(0xffD27E00);
+  static const Color indicationOrange3 = Color(0xffBE3900);
   static const Color indicationRed = Color(0xffEA0000);
   static const Color indicationRed2 = Color(0xffEA0000);
+
+  static const Color warningColor = Color(0xffED6C30);
+  static const Color warningColor2 = Color(0xff950202);
 }

@@ -39,3 +39,11 @@ BoxDecoration secondBoxDecorationConstant({
     ],
   );
 }
+
+BoxDecoration suggestBoxDecoration() {
+  return BoxDecoration(
+    borderRadius: BorderRadius.circular(20),
+    color: Colors.transparent,
+    border: Border.all(color: AppColor.grey2.withOpacity(0.4)),
+  );
+}

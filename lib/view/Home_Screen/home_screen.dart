@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:solutis_project/view/Disease%20Analyst%20Screen/first_analyst_screen.dart';
 import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/extension/navigator.dart';
 import 'package:solutis_project/utils/box_decoration.dart';
-import 'package:solutis_project/view/History_Screen/history_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, this.onNavigate});
+  final Function(int)? onNavigate;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -82,188 +83,192 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
 
-                SizedBox(height: 15),
+                // SizedBox(height: 15),
 
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    double width = constraints.maxWidth;
+                // LayoutBuilder(
+                //   builder: (context, constraints) {
+                //     double width = constraints.maxWidth;
 
-                    return Container(
-                      width: 250,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: AppColor.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            blurRadius: 5,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Stack(
-                        children: [
-                          AnimatedAlign(
-                            duration: Duration(milliseconds: 250),
-                            curve: Curves.easeInOut,
-                            alignment: isUmum
-                                ? Alignment.centerLeft
-                                : Alignment.centerRight,
-                            child: Container(
-                              width: width / 3,
-                              margin: EdgeInsets.all(2.5),
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    AppColor.teal.withOpacity(0.9),
-                                    AppColor.teal3.withOpacity(0.7),
-                                    AppColor.teal4.withOpacity(0.9),
-                                  ],
-                                  begin: Alignment(0, -1),
-                                  end: Alignment(0.2, 1),
-                                ),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                          ),
+                //     return Container(
+                //       width: 250,
+                //       height: 40,
+                //       decoration: BoxDecoration(
+                //         color: AppColor.white,
+                //         borderRadius: BorderRadius.circular(20),
+                //         boxShadow: [
+                //           BoxShadow(
+                //             color: Colors.black.withOpacity(0.2),
+                //             blurRadius: 5,
+                //             offset: Offset(0, 4),
+                //           ),
+                //         ],
+                //       ),
+                //       child: Stack(
+                //         children: [
+                //           AnimatedAlign(
+                //             duration: Duration(milliseconds: 250),
+                //             curve: Curves.easeInOut,
+                //             alignment: isUmum
+                //                 ? Alignment.centerLeft
+                //                 : Alignment.centerRight,
+                //             child: Container(
+                //               width: width / 3,
+                //               margin: EdgeInsets.all(2.5),
+                //               decoration: BoxDecoration(
+                //                 gradient: LinearGradient(
+                //                   colors: [
+                //                     AppColor.teal.withOpacity(0.9),
+                //                     AppColor.teal3.withOpacity(0.7),
+                //                     AppColor.teal4.withOpacity(0.9),
+                //                   ],
+                //                   begin: Alignment(0, -1),
+                //                   end: Alignment(0.2, 1),
+                //                 ),
+                //                 borderRadius: BorderRadius.circular(20),
+                //               ),
+                //             ),
+                //           ),
 
-                          Row(
+                //           Row(
+                //             children: [
+                //               Expanded(
+                //                 child: InkWell(
+                //                   borderRadius: BorderRadius.circular(20),
+                //                   onTap: () {
+                //                     setState(() {
+                //                       isUmum = true;
+                //                     });
+                //                   },
+                //                   child: Center(
+                //                     child: Text(
+                //                       "Mode Umum",
+                //                       style: TextStyle(
+                //                         color: isUmum
+                //                             ? Colors.white
+                //                             : Colors.black,
+                //                         fontWeight: isUmum
+                //                             ? FontWeight.bold
+                //                             : FontWeight.normal,
+                //                       ),
+                //                     ),
+                //                   ),
+                //                 ),
+                //               ),
+                //               Expanded(
+                //                 child: InkWell(
+                //                   borderRadius: BorderRadius.circular(20),
+                //                   onTap: () {
+                //                     setState(() {
+                //                       isUmum = false;
+                //                     });
+                //                   },
+                //                   child: Center(
+                //                     child: Text(
+                //                       "Mode Dokter",
+                //                       style: TextStyle(
+                //                         color: !isUmum
+                //                             ? Colors.white
+                //                             : Colors.black,
+                //                         fontWeight: !isUmum
+                //                             ? FontWeight.bold
+                //                             : FontWeight.normal,
+                //                       ),
+                //                     ),
+                //                   ),
+                //                 ),
+                //               ),
+                //             ],
+                //           ),
+                //         ],
+                //       ),
+                //     );
+                //   },
+                // ),
+                SizedBox(height: 20),
+
+                InkWell(
+                  onTap: () {
+                    context.push(FirstAnalystScreen());
+                  },
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      right: 30,
+                      left: 30,
+                      top: 15,
+                      bottom: 25,
+                    ),
+                    decoration: secondBoxDecorationConstant(
+                      begin: Alignment(-0.2, -1),
+                      end: Alignment(0.3, 1),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Expanded(
-                                child: InkWell(
-                                  borderRadius: BorderRadius.circular(20),
-                                  onTap: () {
-                                    setState(() {
-                                      isUmum = true;
-                                    });
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      "Mode Umum",
-                                      style: TextStyle(
-                                        color: isUmum
-                                            ? Colors.white
-                                            : Colors.black,
-                                        fontWeight: isUmum
-                                            ? FontWeight.bold
-                                            : FontWeight.normal,
-                                      ),
+                              Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/icons/Home Icon/Stethoscope.svg",
+                                  ),
+
+                                  SizedBox(width: 12),
+
+                                  Text(
+                                    "Pemeriksaan Kesehatan",
+                                    style: TextStyle(
+                                      color: AppColor.white,
+                                      fontSize: 14,
                                     ),
                                   ),
+                                ],
+                              ),
+
+                              SizedBox(height: 5),
+
+                              Text(
+                                "Cek Kesehatanmu Sekarang",
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  color: AppColor.white,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              Expanded(
-                                child: InkWell(
-                                  borderRadius: BorderRadius.circular(20),
-                                  onTap: () {
-                                    setState(() {
-                                      isUmum = false;
-                                    });
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      "Mode Dokter",
-                                      style: TextStyle(
-                                        color: !isUmum
-                                            ? Colors.white
-                                            : Colors.black,
-                                        fontWeight: !isUmum
-                                            ? FontWeight.bold
-                                            : FontWeight.normal,
-                                      ),
-                                    ),
-                                  ),
+
+                              SizedBox(height: 12),
+
+                              Text(
+                                "Periksa Gejala dan Saran\nKesehatan",
+                                style: TextStyle(
+                                  color: AppColor.white,
+                                  fontSize: 15,
                                 ),
                               ),
                             ],
                           ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-
-                SizedBox(height: 20),
-
-                Container(
-                  padding: EdgeInsets.only(
-                    right: 30,
-                    left: 30,
-                    top: 15,
-                    bottom: 25,
-                  ),
-                  decoration: secondBoxDecorationConstant(
-                    begin: Alignment(-0.2, -1),
-                    end: Alignment(0.3, 1),
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                SvgPicture.asset(
-                                  "assets/icons/Home Icon/Stethoscope.svg",
-                                ),
-
-                                SizedBox(width: 12),
-
-                                Text(
-                                  "Pemeriksaan Kesehatan",
-                                  style: TextStyle(
-                                    color: AppColor.white,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            SizedBox(height: 5),
-
-                            Text(
-                              "Cek Kesehatanmu Sekarang",
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: AppColor.white,
-                                fontWeight: FontWeight.bold,
+                        ),
+                        Container(
+                          height: 65,
+                          width: 65,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: AppColor.white.withOpacity(0.1),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColor.white.withOpacity(0.1),
+                                blurRadius: 15,
+                                offset: Offset(0, 4),
                               ),
-                            ),
-
-                            SizedBox(height: 12),
-
-                            Text(
-                              "Periksa Gejala dan Saran\nKesehatan",
-                              style: TextStyle(
-                                color: AppColor.white,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
+                          child: SvgPicture.asset(
+                            "assets/icons/Home Icon/Heartbeat.svg",
+                            fit: BoxFit.scaleDown,
+                          ),
                         ),
-                      ),
-                      Container(
-                        height: 65,
-                        width: 65,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: AppColor.white.withOpacity(0.1),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColor.white.withOpacity(0.1),
-                              blurRadius: 15,
-                              offset: Offset(0, 4),
-                            ),
-                          ],
-                        ),
-                        child: SvgPicture.asset(
-                          "assets/icons/Home Icon/Heartbeat.svg",
-                          fit: BoxFit.scaleDown,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
 
@@ -297,7 +302,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           Spacer(),
 
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              widget.onNavigate?.call(2);
+                            },
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.zero,
                               minimumSize: Size(0, 0),
@@ -389,7 +396,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           Spacer(),
 
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              widget.onNavigate?.call(1);
+                            },
                             style: TextButton.styleFrom(
                               padding: EdgeInsets.zero,
                               minimumSize: Size(0, 0),

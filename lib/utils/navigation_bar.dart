@@ -6,17 +6,18 @@ import 'package:solutis_project/view/Home_Screen/home_screen.dart';
 import 'package:solutis_project/view/Profile_Screen/profile_screen.dart';
 
 class NavBarWidget extends StatefulWidget {
-  const NavBarWidget({super.key});
+  final int initialIndex;
+  const NavBarWidget({super.key, this.initialIndex = 0});
 
   @override
   State<NavBarWidget> createState() => _NavBarWidgetState();
 }
 
 class _NavBarWidgetState extends State<NavBarWidget> {
-  int _selectedIndex = 0;
+  late int _selectedIndex = 0;
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
+  late final List<Widget> _widgetOptions = <Widget>[
+    HomeScreen(onNavigate: _onItemTapped),
     EducationScreen(),
     HistoryScreen(),
     ProfileScreen(),
@@ -26,6 +27,11 @@ class _NavBarWidgetState extends State<NavBarWidget> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialIndex;
   }
 
   @override

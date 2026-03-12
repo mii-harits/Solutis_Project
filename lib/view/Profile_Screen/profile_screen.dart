@@ -25,113 +25,127 @@ class _ProfileScreenState extends State<ProfileScreen> {
             padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
             child: Column(
               children: [
-                Row(
+                // Row(
+                //   children: [
+                //     SvgPicture.asset(
+                //       "assets/icons/NavBar Icon/Profile.svg",
+                //       color: AppColor.teal,
+                //       height: 43,
+                //       width: 43,
+                //     ),
+
+                //     SizedBox(width: 15),
+
+                //     Text(
+                //       "Profil Saya",
+                //       style: TextStyle(fontSize: 24, color: AppColor.teal),
+                //     ),
+                //   ],
+                // ),
+
+                // SizedBox(height: 20),
+                Stack(
                   children: [
-                    SvgPicture.asset(
-                      "assets/icons/NavBar Icon/Profile.svg",
-                      color: AppColor.teal,
-                      height: 43,
-                      width: 43,
-                    ),
-
-                    SizedBox(width: 15),
-
-                    Text(
-                      "Profil Saya",
-                      style: TextStyle(fontSize: 24, color: AppColor.teal),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 20),
-
-                Container(
-                  padding: EdgeInsets.all(20.0),
-                  decoration: boxDecorationConstant(),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            height: 70,
-                            width: 70,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              gradient: LinearGradient(
-                                colors: [
-                                  AppColor.teal.withOpacity(0.8),
-                                  AppColor.teal3.withOpacity(0.6),
-                                  AppColor.teal4.withOpacity(0.8),
-                                ],
-                                begin: Alignment(0, -1),
-                                end: Alignment(0, 1),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColor.teal3.withOpacity(0.3),
-                                  blurRadius: 6,
-                                  offset: Offset(0, 4),
-                                ),
-                              ],
-                            ),
-                            child: SvgPicture.asset(
-                              "assets/icons/Profile Icon/Profile Person.svg",
-                              fit: BoxFit.scaleDown,
-                            ),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                            "assets/images/Logo/backgroundd.jpg",
                           ),
-
-                          SizedBox(width: 15),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(20.0),
+                      decoration: boxDecorationConstant(),
+                      child: Column(
+                        children: [
+                          Row(
                             children: [
-                              Text(
-                                "Muhammad Harits",
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              Text(
-                                "@muhammadharits",
-                                style: TextStyle(
-                                  color: AppColor.grey1,
-                                  fontSize: 12,
+                              Container(
+                                height: 70,
+                                width: 70,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      AppColor.teal.withOpacity(0.8),
+                                      AppColor.teal3.withOpacity(0.6),
+                                      AppColor.teal4.withOpacity(0.8),
+                                    ],
+                                    begin: Alignment(0, -1),
+                                    end: Alignment(0, 1),
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColor.teal3.withOpacity(0.3),
+                                      blurRadius: 6,
+                                      offset: Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                                child: SvgPicture.asset(
+                                  "assets/icons/Profile Icon/Profile Person.svg",
+                                  fit: BoxFit.scaleDown,
                                 ),
                               ),
-                              Text(
-                                "emharits007@gmail.com",
-                                style: TextStyle(
-                                  color: AppColor.grey1,
-                                  fontSize: 12,
-                                ),
+
+                              SizedBox(width: 15),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Muhammad Harits",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  Text(
+                                    "@muhammadharits",
+                                    style: TextStyle(
+                                      color: AppColor.grey1,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                  Text(
+                                    "emharits007@gmail.com",
+                                    style: TextStyle(
+                                      color: AppColor.grey1,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
+
+                          SizedBox(height: 10),
+
+                          Container(
+                            padding: EdgeInsets.symmetric(vertical: 7),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: AppColor.grey2.withOpacity(0.08),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/icons/Profile Icon/Edit.svg",
+                                ),
+                                SizedBox(width: 7),
+
+                                Text(
+                                  "Edit Profil",
+                                  style: TextStyle(color: AppColor.teal),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-
-                      SizedBox(height: 10),
-
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 7),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: AppColor.grey2.withOpacity(0.08),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(
-                              "assets/icons/Profile Icon/Edit.svg",
-                            ),
-                            SizedBox(width: 7),
-
-                            Text(
-                              "Edit Profil",
-                              style: TextStyle(color: AppColor.teal),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
 
                 SizedBox(height: 25),

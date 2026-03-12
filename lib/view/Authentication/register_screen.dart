@@ -6,6 +6,7 @@ import 'package:solutis_project/extension/navigator.dart';
 import 'package:solutis_project/models/user_model.dart';
 import 'package:solutis_project/utils/background.dart';
 import 'package:solutis_project/utils/input_decoration.dart';
+import 'package:solutis_project/view/Home_Screen/home_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -269,6 +270,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       content: Text("Pendaftaran Berhasil"),
                                     ),
                                   );
+                                  context.push(HomeScreen());
                                 }
                               },
                               child: Stack(
