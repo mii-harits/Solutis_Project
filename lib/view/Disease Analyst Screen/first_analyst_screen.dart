@@ -176,134 +176,134 @@ class _FirstAnalystScreenState extends State<FirstAnalystScreen> {
                       ),
                     ),
 
-                    SizedBox(height: 15),
+                    // SizedBox(height: 15),
 
-                    Text(
-                      "Atau cari gejala umum",
-                      style: TextStyle(fontSize: 16),
-                    ),
+                    // Text(
+                    //   "Atau cari gejala umum",
+                    //   style: TextStyle(fontSize: 16),
+                    // ),
 
-                    SizedBox(height: 12),
+                    // SizedBox(height: 12),
 
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: AppColor.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            blurRadius: 4,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: "Cari Gejala Umum....",
-                          hintStyle: TextStyle(color: AppColor.grey2),
-                          prefixIcon: Icon(Icons.search, color: AppColor.grey2),
-                          contentPadding: EdgeInsets.symmetric(vertical: 8),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25),
-                            borderSide: BorderSide.none,
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Container(
+                    //   padding: EdgeInsets.symmetric(horizontal: 15),
+                    //   decoration: BoxDecoration(
+                    //     borderRadius: BorderRadius.circular(25),
+                    //     color: AppColor.white,
+                    //     boxShadow: [
+                    //       BoxShadow(
+                    //         color: Colors.black.withOpacity(0.2),
+                    //         blurRadius: 4,
+                    //         offset: Offset(0, 4),
+                    //       ),
+                    //     ],
+                    //   ),
+                    //   child: TextField(
+                    //     decoration: InputDecoration(
+                    //       hintText: "Cari Gejala Umum....",
+                    //       hintStyle: TextStyle(color: AppColor.grey2),
+                    //       prefixIcon: Icon(Icons.search, color: AppColor.grey2),
+                    //       contentPadding: EdgeInsets.symmetric(vertical: 8),
+                    //       border: OutlineInputBorder(
+                    //         borderRadius: BorderRadius.circular(25),
+                    //         borderSide: BorderSide.none,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
 
-                    SizedBox(height: 22),
+                    // SizedBox(height: 22),
 
-                    Column(
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 4,
-                              ),
-                              decoration: suggestBoxDecoration(),
-                              child: Center(child: Text("Demam")),
-                            ),
+                    // Column(
+                    //   children: [
+                    //     Row(
+                    //       children: [
+                    //         Container(
+                    //           padding: EdgeInsets.symmetric(
+                    //             horizontal: 12,
+                    //             vertical: 4,
+                    //           ),
+                    //           decoration: suggestBoxDecoration(),
+                    //           child: Center(child: Text("Demam")),
+                    //         ),
 
-                            SizedBox(width: 12),
+                    //         SizedBox(width: 12),
 
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 4,
-                              ),
-                              decoration: suggestBoxDecoration(),
-                              child: Center(child: Text("Pusing")),
-                            ),
+                    //         Container(
+                    //           padding: EdgeInsets.symmetric(
+                    //             horizontal: 12,
+                    //             vertical: 4,
+                    //           ),
+                    //           decoration: suggestBoxDecoration(),
+                    //           child: Center(child: Text("Pusing")),
+                    //         ),
 
-                            SizedBox(width: 12),
+                    //         SizedBox(width: 12),
 
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 4,
-                              ),
-                              decoration: suggestBoxDecoration(),
-                              child: Center(child: Text("Nyeri otot")),
-                            ),
-                          ],
-                        ),
+                    //         Container(
+                    //           padding: EdgeInsets.symmetric(
+                    //             horizontal: 12,
+                    //             vertical: 4,
+                    //           ),
+                    //           decoration: suggestBoxDecoration(),
+                    //           child: Center(child: Text("Nyeri otot")),
+                    //         ),
+                    //       ],
+                    //     ),
 
-                        SizedBox(height: 10),
+                    //     SizedBox(height: 10),
 
-                        Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 4,
-                              ),
-                              decoration: suggestBoxDecoration(),
-                              child: Center(child: Text("Sesak Nafas")),
-                            ),
+                    //     Row(
+                    //       children: [
+                    //         Container(
+                    //           padding: EdgeInsets.symmetric(
+                    //             horizontal: 12,
+                    //             vertical: 4,
+                    //           ),
+                    //           decoration: suggestBoxDecoration(),
+                    //           child: Center(child: Text("Sesak Nafas")),
+                    //         ),
 
-                            SizedBox(width: 12),
+                    //         SizedBox(width: 12),
 
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 4,
-                              ),
-                              decoration: suggestBoxDecoration(),
-                              child: Center(child: Text("Sakit Kepala")),
-                            ),
-                          ],
-                        ),
+                    //         Container(
+                    //           padding: EdgeInsets.symmetric(
+                    //             horizontal: 12,
+                    //             vertical: 4,
+                    //           ),
+                    //           decoration: suggestBoxDecoration(),
+                    //           child: Center(child: Text("Sakit Kepala")),
+                    //         ),
+                    //       ],
+                    //     ),
 
-                        SizedBox(height: 10),
+                    //     SizedBox(height: 10),
 
-                        Row(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 4,
-                              ),
-                              decoration: suggestBoxDecoration(),
-                              child: Center(child: Text("Mual / Muntah")),
-                            ),
+                    //     Row(
+                    //       children: [
+                    //         Container(
+                    //           padding: EdgeInsets.symmetric(
+                    //             horizontal: 12,
+                    //             vertical: 4,
+                    //           ),
+                    //           decoration: suggestBoxDecoration(),
+                    //           child: Center(child: Text("Mual / Muntah")),
+                    //         ),
 
-                            SizedBox(width: 12),
+                    //         SizedBox(width: 12),
 
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 4,
-                              ),
-                              decoration: suggestBoxDecoration(),
-                              child: Center(child: Text("Lemas")),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                    //         Container(
+                    //           padding: EdgeInsets.symmetric(
+                    //             horizontal: 12,
+                    //             vertical: 4,
+                    //           ),
+                    //           decoration: suggestBoxDecoration(),
+                    //           child: Center(child: Text("Lemas")),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ],
+                    // ),
                   ],
                 ),
               ),

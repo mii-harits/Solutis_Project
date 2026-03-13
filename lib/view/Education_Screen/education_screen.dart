@@ -14,6 +14,7 @@ class EducationScreen extends StatefulWidget {
 
 class _EducationScreenState extends State<EducationScreen> {
   int selectedIndex = 0;
+  String selectedCategory = "";
 
   final List<Widget> categoryScreen = [
     LifestyleCategoryScreen(),
@@ -273,6 +274,173 @@ class _EducationScreenState extends State<EducationScreen> {
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColor.teal,
+        shape: CircleBorder(),
+        elevation: 6,
+        onPressed: () {
+          showModalBottomSheet(
+            backgroundColor: Colors.transparent,
+            context: context,
+            isScrollControlled: true,
+            builder: (context) {
+              return FractionallySizedBox(
+                heightFactor: 0.75,
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 30),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: AppColor.white,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(25),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Tambah Informasi Kesehatan",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
+                      SizedBox(height: 20),
+                      Divider(thickness: 1),
+                      SizedBox(height: 20),
+
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Kategory",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                              ),
+                            ),
+
+                            SizedBox(height: 10),
+
+                            Text(
+                              "Judul",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                              ),
+                            ),
+
+                            SizedBox(height: 10),
+
+                            TextField(
+                              decoration: InputDecoration(
+                                hintText: "Masukkan Judul Edukasi...",
+                                hintStyle: TextStyle(color: AppColor.grey2),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: AppColor.grey2.withOpacity(0.7),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: AppColor.grey2.withOpacity(0.7),
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(height: 14),
+
+                            Text(
+                              "Deskripsi",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 16,
+                              ),
+                            ),
+
+                            SizedBox(height: 10),
+
+                            TextField(
+                              minLines: 5,
+                              maxLines: null,
+                              decoration: InputDecoration(
+                                hintText: "Masukkan Deskripsi Edukasi...",
+                                hintStyle: TextStyle(color: AppColor.grey2),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: AppColor.grey2.withOpacity(0.7),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: AppColor.grey2.withOpacity(0.7),
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                            SizedBox(height: 30),
+
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColor.redHeight,
+                                      foregroundColor: AppColor.white,
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    onPressed: () {},
+                                    child: Text(
+                                      "Batal",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                                SizedBox(width: 12),
+
+                                Expanded(
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColor.teal,
+                                      foregroundColor: AppColor.white,
+                                      elevation: 0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                    ),
+                                    onPressed: () {},
+                                    child: Text(
+                                      "Tambahkan",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        },
+        child: Icon(Icons.add, color: AppColor.white),
       ),
     );
   }

@@ -11,10 +11,12 @@ class PreferenceHandler {
 
   static const String _isLogin = 'isLogin';
 
+  // Create
   Future<void> storingIsLogin(bool isLogin) async {
     await _preferences.setBool(_isLogin, isLogin);
   }
 
+  // Get
   static Future<bool?> getIsLogin() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -22,6 +24,7 @@ class PreferenceHandler {
     return data;
   }
 
+  // Delete
   Future<void> deleteIsLogin() async {
     _preferences.remove(_isLogin);
   }
