@@ -53,11 +53,14 @@ class DBHelper {
 
     final data = await dbs.query(
       'educations',
-      where: 'category = ?',
+      where: 'LOWER (category) = ?',
       whereArgs: [category],
     );
 
-    print("DATA EDUCATION:");
+    print("DATA EDUCATION: $category");
+    for (var d in data) {
+      print("DATA CATEGORY: ${d['category']}");
+    }
     print(data);
 
     return data;
