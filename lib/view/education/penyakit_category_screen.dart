@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:solutis_project/constant/app_color.dart';
-import 'package:solutis_project/utils/box_decoration.dart';
+import 'package:solutis_project/widgets/box_decoration.dart';
 
 class PenyakitCategoryScreen extends StatelessWidget {
   const PenyakitCategoryScreen({super.key});

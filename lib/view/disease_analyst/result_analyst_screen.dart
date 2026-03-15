@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/extension/navigator.dart';
-import 'package:solutis_project/utils/box_decoration.dart';
-import 'package:solutis_project/utils/navigation_bar.dart';
+import 'package:solutis_project/widgets/box_decoration.dart';
+import 'package:solutis_project/widgets/navigation_bar.dart';
 
 class ResultAnalystScreen extends StatelessWidget {
   const ResultAnalystScreen({super.key});

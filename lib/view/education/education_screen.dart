@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:solutis_project/constant/app_color.dart';
-import 'package:solutis_project/view/Education_Screen/lifestyle_category_screen.dart';
-import 'package:solutis_project/view/Education_Screen/obat_category_screen.dart';
-import 'package:solutis_project/view/Education_Screen/penyakit_category_screen.dart';
+import 'package:solutis_project/view/education/lifestyle_category_screen.dart';
+import 'package:solutis_project/view/education/obat_category_screen.dart';
+import 'package:solutis_project/view/education/penyakit_category_screen.dart';
 
 class EducationScreen extends StatefulWidget {
   const EducationScreen({super.key});

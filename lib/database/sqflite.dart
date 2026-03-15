@@ -1,5 +1,5 @@
 import 'package:path/path.dart';
-import 'package:solutis_project/models/user_model.dart';
+import 'package:solutis_project/models/user.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBHelper {

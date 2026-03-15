@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:solutis_project/constant/app_color.dart';
-import 'package:solutis_project/view/Education_Screen/education_screen.dart';
-import 'package:solutis_project/view/History_Screen/history_screen.dart';
-import 'package:solutis_project/view/Home_Screen/home_screen.dart';
-import 'package:solutis_project/view/Profile_Screen/profile_screen.dart';
+import 'package:solutis_project/view/education/education_screen.dart';
+import 'package:solutis_project/view/history/history_screen.dart';
+import 'package:solutis_project/view/home/home_screen.dart';
+import 'package:solutis_project/view/profile/profile_screen.dart';
 
 class NavBarWidget extends StatefulWidget {
   final int initialIndex;

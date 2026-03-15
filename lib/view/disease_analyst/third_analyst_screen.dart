@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/extension/navigator.dart';
-import 'package:solutis_project/utils/box_decoration.dart';
-import 'package:solutis_project/view/Disease%20Analyst%20Screen/third_analyst_screen.dart';
+import 'package:solutis_project/widgets/box_decoration.dart';
+import 'package:solutis_project/view/disease_analyst/result_analyst_screen.dart';
 
-class SecondAnalystScreen extends StatefulWidget {
-  const SecondAnalystScreen({super.key});
+class ThirdAnalystScreen extends StatefulWidget {
+  const ThirdAnalystScreen({super.key});
 
   @override
-  State<SecondAnalystScreen> createState() => _SecondAnalystScreenState();
+  State<ThirdAnalystScreen> createState() => _ThirdAnalystScreenState();
 }
 
-class _SecondAnalystScreenState extends State<SecondAnalystScreen> {
+class _ThirdAnalystScreenState extends State<ThirdAnalystScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +42,7 @@ class _SecondAnalystScreenState extends State<SecondAnalystScreen> {
                         style: TextStyle(fontSize: 22, color: AppColor.teal),
                       ),
                       Text(
-                        "Langkah 2 dari 3",
+                        "Langkah 3 dari 3",
                         style: TextStyle(color: AppColor.grey1),
                       ),
                     ],
@@ -83,7 +83,7 @@ class _SecondAnalystScreenState extends State<SecondAnalystScreen> {
                       height: 6,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: AppColor.grey2.withOpacity(0.3),
+                        color: AppColor.teal,
                       ),
                     ),
                   ),
@@ -105,118 +105,44 @@ class _SecondAnalystScreenState extends State<SecondAnalystScreen> {
                       child: Column(
                         children: [
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
                                 height: 50,
                                 width: 50,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(18),
-                                  color: AppColor.blueHeight.withOpacity(0.25),
-                                ),
-                                child: SvgPicture.asset(
-                                  "assets/icons/Analyst Icon/Calender.svg",
-                                  fit: BoxFit.scaleDown,
-                                ),
-                              ),
-                              SizedBox(width: 10),
-
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Sudah Berapa Lama",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Sejak Kapan Gejala Dirasakan",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: AppColor.grey1,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-
-                          SizedBox(height: 15),
-
-                          TextField(
-                            decoration: InputDecoration(
-                              hintText: "Contoh : 3 Hari",
-                              hintStyle: TextStyle(color: AppColor.grey2),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                borderSide: BorderSide(
-                                  color: AppColor.grey2.withOpacity(0.2),
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                borderSide: BorderSide(
-                                  color: AppColor.grey2.withOpacity(0.2),
-                                ),
-                              ),
-                              filled: true,
-                              fillColor: AppColor.grey2.withOpacity(0.1),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    SizedBox(height: 28),
-
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 20,
-                      ),
-                      decoration: boxDecorationConstant(),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                height: 50,
-                                width: 50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(18),
-                                  color: AppColor.purpleHeight.withOpacity(
+                                  color: AppColor.warningColor.withOpacity(
                                     0.25,
                                   ),
                                 ),
                                 child: SvgPicture.asset(
-                                  "assets/icons/Analyst Icon/Single_Paper.svg",
+                                  "assets/icons/Analyst Icon/warning.svg",
                                   fit: BoxFit.scaleDown,
                                 ),
                               ),
                               SizedBox(width: 10),
 
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Riwayat Penyakit",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Kondisi Tambahan",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    "Penyakit yang pernah diderita",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: AppColor.grey1,
+                                    Text(
+                                      "Informasi Tambahan mengenai kondisi saat ini",
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: AppColor.grey1,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -226,7 +152,7 @@ class _SecondAnalystScreenState extends State<SecondAnalystScreen> {
                           TextField(
                             decoration: InputDecoration(
                               hintText:
-                                  "Contoh : Diabetes, Hipertensi, Alergi Makanan....",
+                                  "Contoh : Panas Dingin saat malam hari, Tenggorokan terasa panas....",
                               hintStyle: TextStyle(color: AppColor.grey2),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20),
@@ -266,7 +192,7 @@ class _SecondAnalystScreenState extends State<SecondAnalystScreen> {
           decoration: secondBoxDecorationConstant(),
           child: ElevatedButton(
             onPressed: () {
-              context.push(ThirdAnalystScreen());
+              context.push(ResultAnalystScreen());
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,
@@ -277,18 +203,22 @@ class _SecondAnalystScreenState extends State<SecondAnalystScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  "Lanjutkan",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: AppColor.white,
-                  ),
+                Icon(
+                  Icons.assignment_outlined,
+                  color: AppColor.white,
+                  size: 20,
                 ),
 
                 SizedBox(width: 6),
 
-                Icon(Icons.arrow_forward_ios, color: AppColor.white, size: 16),
+                Text(
+                  "Lihat Hasil",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                    color: AppColor.white,
+                  ),
+                ),
               ],
             ),
           ),

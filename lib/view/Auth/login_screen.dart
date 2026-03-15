@@ -3,11 +3,11 @@ import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/database/preference.dart';
 import 'package:solutis_project/database/sqflite.dart';
 import 'package:solutis_project/extension/navigator.dart';
-import 'package:solutis_project/models/user_model.dart';
-import 'package:solutis_project/utils/background.dart';
-import 'package:solutis_project/utils/input_decoration.dart';
-import 'package:solutis_project/utils/navigation_bar.dart';
-import 'package:solutis_project/view/Authentication/register_screen.dart';
+import 'package:solutis_project/models/user.dart';
+import 'package:solutis_project/widgets/background.dart';
+import 'package:solutis_project/widgets/input_decoration.dart';
+import 'package:solutis_project/widgets/navigation_bar.dart';
+import 'package:solutis_project/view/Auth/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

@@ -1,19 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:solutis_project/view/Disease%20Analyst%20Screen/second_analyst_screen.dart';
 import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/extension/navigator.dart';
-import 'package:solutis_project/utils/box_decoration.dart';
+import 'package:solutis_project/widgets/box_decoration.dart';
+import 'package:solutis_project/view/disease_analyst/third_analyst_screen.dart';
 
-class FirstAnalystScreen extends StatefulWidget {
-  const FirstAnalystScreen({super.key});
+class SecondAnalystScreen extends StatefulWidget {
+  const SecondAnalystScreen({super.key});
 
   @override
-  State<FirstAnalystScreen> createState() => _FirstAnalystScreenState();
+  State<SecondAnalystScreen> createState() => _SecondAnalystScreenState();
 }
 
-class _FirstAnalystScreenState extends State<FirstAnalystScreen> {
+class _SecondAnalystScreenState extends State<SecondAnalystScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +42,7 @@ class _FirstAnalystScreenState extends State<FirstAnalystScreen> {
                         style: TextStyle(fontSize: 22, color: AppColor.teal),
                       ),
                       Text(
-                        "Langkah 1 dari 3",
+                        "Langkah 2 dari 3",
                         style: TextStyle(color: AppColor.grey1),
                       ),
                     ],
@@ -71,7 +71,7 @@ class _FirstAnalystScreenState extends State<FirstAnalystScreen> {
                       height: 6,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: AppColor.grey2.withOpacity(0.3),
+                        color: AppColor.teal,
                       ),
                     ),
                   ),
@@ -95,7 +95,6 @@ class _FirstAnalystScreenState extends State<FirstAnalystScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
                       padding: EdgeInsets.symmetric(
@@ -112,11 +111,10 @@ class _FirstAnalystScreenState extends State<FirstAnalystScreen> {
                                 width: 50,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(18),
-                                  color: AppColor.teal.withOpacity(0.25),
+                                  color: AppColor.blueHeight.withOpacity(0.25),
                                 ),
                                 child: SvgPicture.asset(
-                                  "assets/icons/Home Icon/Stethoscope.svg",
-                                  color: AppColor.teal,
+                                  "assets/icons/Analyst Icon/Calender.svg",
                                   fit: BoxFit.scaleDown,
                                 ),
                               ),
@@ -126,14 +124,14 @@ class _FirstAnalystScreenState extends State<FirstAnalystScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Gejala Yang Dirasakan",
+                                    "Sudah Berapa Lama",
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                   Text(
-                                    "Ceritakan keluhan Anda",
+                                    "Sejak Kapan Gejala Dirasakan",
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: AppColor.grey1,
@@ -148,8 +146,7 @@ class _FirstAnalystScreenState extends State<FirstAnalystScreen> {
 
                           TextField(
                             decoration: InputDecoration(
-                              hintText:
-                                  "Contoh : Saya merasakan demam, batuk, dan pilek sejak kemarin....",
+                              hintText: "Contoh : 3 Hari",
                               hintStyle: TextStyle(color: AppColor.grey2),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20),
@@ -169,141 +166,92 @@ class _FirstAnalystScreenState extends State<FirstAnalystScreen> {
                               filled: true,
                               fillColor: AppColor.grey2.withOpacity(0.1),
                             ),
-                            minLines: 5,
-                            maxLines: null,
                           ),
                         ],
                       ),
                     ),
 
-                    // SizedBox(height: 15),
+                    SizedBox(height: 28),
 
-                    // Text(
-                    //   "Atau cari gejala umum",
-                    //   style: TextStyle(fontSize: 16),
-                    // ),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 20,
+                      ),
+                      decoration: boxDecorationConstant(),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(18),
+                                  color: AppColor.purpleHeight.withOpacity(
+                                    0.25,
+                                  ),
+                                ),
+                                child: SvgPicture.asset(
+                                  "assets/icons/Analyst Icon/Single_Paper.svg",
+                                  fit: BoxFit.scaleDown,
+                                ),
+                              ),
+                              SizedBox(width: 10),
 
-                    // SizedBox(height: 12),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Riwayat Penyakit",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Penyakit yang pernah diderita",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: AppColor.grey1,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
 
-                    // Container(
-                    //   padding: EdgeInsets.symmetric(horizontal: 15),
-                    //   decoration: BoxDecoration(
-                    //     borderRadius: BorderRadius.circular(25),
-                    //     color: AppColor.white,
-                    //     boxShadow: [
-                    //       BoxShadow(
-                    //         color: Colors.black.withOpacity(0.2),
-                    //         blurRadius: 4,
-                    //         offset: Offset(0, 4),
-                    //       ),
-                    //     ],
-                    //   ),
-                    //   child: TextField(
-                    //     decoration: InputDecoration(
-                    //       hintText: "Cari Gejala Umum....",
-                    //       hintStyle: TextStyle(color: AppColor.grey2),
-                    //       prefixIcon: Icon(Icons.search, color: AppColor.grey2),
-                    //       contentPadding: EdgeInsets.symmetric(vertical: 8),
-                    //       border: OutlineInputBorder(
-                    //         borderRadius: BorderRadius.circular(25),
-                    //         borderSide: BorderSide.none,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+                          SizedBox(height: 15),
 
-                    // SizedBox(height: 22),
-
-                    // Column(
-                    //   children: [
-                    //     Row(
-                    //       children: [
-                    //         Container(
-                    //           padding: EdgeInsets.symmetric(
-                    //             horizontal: 12,
-                    //             vertical: 4,
-                    //           ),
-                    //           decoration: suggestBoxDecoration(),
-                    //           child: Center(child: Text("Demam")),
-                    //         ),
-
-                    //         SizedBox(width: 12),
-
-                    //         Container(
-                    //           padding: EdgeInsets.symmetric(
-                    //             horizontal: 12,
-                    //             vertical: 4,
-                    //           ),
-                    //           decoration: suggestBoxDecoration(),
-                    //           child: Center(child: Text("Pusing")),
-                    //         ),
-
-                    //         SizedBox(width: 12),
-
-                    //         Container(
-                    //           padding: EdgeInsets.symmetric(
-                    //             horizontal: 12,
-                    //             vertical: 4,
-                    //           ),
-                    //           decoration: suggestBoxDecoration(),
-                    //           child: Center(child: Text("Nyeri otot")),
-                    //         ),
-                    //       ],
-                    //     ),
-
-                    //     SizedBox(height: 10),
-
-                    //     Row(
-                    //       children: [
-                    //         Container(
-                    //           padding: EdgeInsets.symmetric(
-                    //             horizontal: 12,
-                    //             vertical: 4,
-                    //           ),
-                    //           decoration: suggestBoxDecoration(),
-                    //           child: Center(child: Text("Sesak Nafas")),
-                    //         ),
-
-                    //         SizedBox(width: 12),
-
-                    //         Container(
-                    //           padding: EdgeInsets.symmetric(
-                    //             horizontal: 12,
-                    //             vertical: 4,
-                    //           ),
-                    //           decoration: suggestBoxDecoration(),
-                    //           child: Center(child: Text("Sakit Kepala")),
-                    //         ),
-                    //       ],
-                    //     ),
-
-                    //     SizedBox(height: 10),
-
-                    //     Row(
-                    //       children: [
-                    //         Container(
-                    //           padding: EdgeInsets.symmetric(
-                    //             horizontal: 12,
-                    //             vertical: 4,
-                    //           ),
-                    //           decoration: suggestBoxDecoration(),
-                    //           child: Center(child: Text("Mual / Muntah")),
-                    //         ),
-
-                    //         SizedBox(width: 12),
-
-                    //         Container(
-                    //           padding: EdgeInsets.symmetric(
-                    //             horizontal: 12,
-                    //             vertical: 4,
-                    //           ),
-                    //           decoration: suggestBoxDecoration(),
-                    //           child: Center(child: Text("Lemas")),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ],
-                    // ),
+                          TextField(
+                            decoration: InputDecoration(
+                              hintText:
+                                  "Contoh : Diabetes, Hipertensi, Alergi Makanan....",
+                              hintStyle: TextStyle(color: AppColor.grey2),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(
+                                  color: AppColor.grey2.withOpacity(0.2),
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide(
+                                  color: AppColor.grey2.withOpacity(0.2),
+                                ),
+                              ),
+                              filled: true,
+                              fillColor: AppColor.grey2.withOpacity(0.1),
+                            ),
+                            minLines: 4,
+                            maxLines: null,
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -318,7 +266,7 @@ class _FirstAnalystScreenState extends State<FirstAnalystScreen> {
           decoration: secondBoxDecorationConstant(),
           child: ElevatedButton(
             onPressed: () {
-              context.push(SecondAnalystScreen());
+              context.push(ThirdAnalystScreen());
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,

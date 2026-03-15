@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:solutis_project/view/Disease%20Analyst%20Screen/first_analyst_screen.dart';
+import 'package:solutis_project/view/disease_analyst/first_analyst_screen.dart';
 import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/extension/navigator.dart';
-import 'package:solutis_project/utils/box_decoration.dart';
+import 'package:solutis_project/widgets/box_decoration.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, this.onNavigate});
