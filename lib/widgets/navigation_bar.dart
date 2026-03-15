@@ -34,35 +34,97 @@ class _NavBarWidgetState extends State<NavBarWidget> {
     _selectedIndex = widget.initialIndex;
   }
 
+  Widget _buildCustomNavItem(IconData icon, bool active) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Icon(
+              icon,
+              color: active ? AppColor.teal2 : AppColor.grey2,
+              size: 28,
+            ),
+            if (active)
+              Positioned(
+                top: -6, // jarak cahaya dari icon
+                left: -13, // panjang horizontal bisa diperluas
+                right: -13,
+                child: Container(
+                  height: 2, // tipis
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(2),
+                    gradient: LinearGradient(
+                      colors: [
+                        AppColor.teal2.withOpacity(0.5),
+                        AppColor.teal2.withOpacity(0.0),
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final icons = [
+      Icons.home_outlined,
+      Icons.menu_book_outlined,
+      Icons.history_outlined,
+      Icons.person_outline,
+    ];
+
+    final activeIcons = [
+      Icons.home_rounded,
+      Icons.menu_book_rounded,
+      Icons.history_rounded,
+      Icons.person_rounded,
+    ];
+
+    final labels = ['Beranda', 'Edukasi', 'Riwayat', 'Profil'];
+
     return Scaffold(
       body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: 'Beranda',
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: AppColor.white,
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book_outlined),
-            label: 'Edukasi',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history_outlined),
-            label: 'Riwayat',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: 'Profil',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: AppColor.teal2,
-        unselectedItemColor: AppColor.grey2,
-        backgroundColor: AppColor.white,
-        onTap: _onItemTapped,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 8,
+              offset: const Offset(0, -2),
+            ),
+          ],
+        ),
+        child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          selectedItemColor: AppColor.teal2,
+          unselectedItemColor: AppColor.grey2,
+          items: List.generate(4, (index) {
+            return BottomNavigationBarItem(
+              icon: _buildCustomNavItem(icons[index], false),
+              activeIcon: _buildCustomNavItem(activeIcons[index], true),
+              label: labels[index],
+            );
+          }),
+        ),
       ),
     );
   }
