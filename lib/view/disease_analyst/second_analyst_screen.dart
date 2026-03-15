@@ -3,17 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/extension/navigator.dart';
+import 'package:solutis_project/models/disease_result_model.dart';
 import 'package:solutis_project/widgets/box_decoration.dart';
 import 'package:solutis_project/view/disease_analyst/third_analyst_screen.dart';
 
 class SecondAnalystScreen extends StatefulWidget {
-  const SecondAnalystScreen({super.key});
+  final DiseaseResultModel tempResult;
+  const SecondAnalystScreen({super.key, required this.tempResult});
 
   @override
   State<SecondAnalystScreen> createState() => _SecondAnalystScreenState();
 }
 
 class _SecondAnalystScreenState extends State<SecondAnalystScreen> {
+  final TextEditingController durationController = TextEditingController();
+  final TextEditingController historyController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // isi field dengan data lama jika ada (untuk edit)
+    durationController.text = widget.tempResult.duration;
+    historyController.text = widget.tempResult.history;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,6 +158,7 @@ class _SecondAnalystScreenState extends State<SecondAnalystScreen> {
                           SizedBox(height: 15),
 
                           TextField(
+                            controller: durationController,
                             decoration: InputDecoration(
                               hintText: "Contoh : 3 Hari",
                               hintStyle: TextStyle(color: AppColor.grey2),
@@ -224,6 +238,7 @@ class _SecondAnalystScreenState extends State<SecondAnalystScreen> {
                           SizedBox(height: 15),
 
                           TextField(
+                            controller: historyController,
                             decoration: InputDecoration(
                               hintText:
                                   "Contoh : Diabetes, Hipertensi, Alergi Makanan....",
@@ -266,7 +281,9 @@ class _SecondAnalystScreenState extends State<SecondAnalystScreen> {
           decoration: secondBoxDecorationConstant(),
           child: ElevatedButton(
             onPressed: () {
-              context.push(ThirdAnalystScreen());
+              widget.tempResult.duration = durationController.text;
+              widget.tempResult.history = historyController.text;
+              context.push(ThirdAnalystScreen(tempResult: widget.tempResult));
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,

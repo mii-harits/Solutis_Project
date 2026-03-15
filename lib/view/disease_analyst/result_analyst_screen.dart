@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:solutis_project/constant/app_color.dart';
+import 'package:solutis_project/controller/disease_controller.dart';
 import 'package:solutis_project/extension/navigator.dart';
+import 'package:solutis_project/models/disease_result_model.dart';
+import 'package:solutis_project/view/disease_analyst/first_analyst_screen.dart';
 import 'package:solutis_project/widgets/box_decoration.dart';
 import 'package:solutis_project/widgets/navigation_bar.dart';
 
 class ResultAnalystScreen extends StatelessWidget {
-  const ResultAnalystScreen({super.key});
+  final DiseaseResultModel result;
+  final DiseaseController controller = DiseaseController();
+  ResultAnalystScreen({super.key, required this.result});
 
   @override
   Widget build(BuildContext context) {
@@ -98,8 +103,10 @@ class ResultAnalystScreen extends StatelessWidget {
                       SizedBox(height: 12),
 
                       Text(
-                        "Infeksi Saluran Pernapasan Atas atau Demam",
-                        style: TextStyle(color: AppColor.grey2, fontSize: 15),
+                        result.mainSymptoms.join(
+                          ", ",
+                        ), // untuk kemungkinan kondisi / gejala utama
+                        style: TextStyle(fontSize: 15),
                       ),
 
                       Divider(color: Colors.black),
@@ -110,20 +117,21 @@ class ResultAnalystScreen extends StatelessWidget {
 
                       SizedBox(height: 12),
 
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            "assets/icons/Analyst Icon/warning.svg",
-                            color: AppColor.warningColor,
-                          ),
-
-                          SizedBox(width: 6),
-
-                          Text(
-                            "Diare",
-                            style: TextStyle(color: AppColor.grey2),
-                          ),
-                        ],
+                      Column(
+                        children: result.mainSymptoms
+                            .map(
+                              (symptom) => Row(
+                                children: [
+                                  Icon(
+                                    Icons.warning_outlined,
+                                    color: Colors.orange,
+                                  ),
+                                  SizedBox(width: 6),
+                                  Text(symptom),
+                                ],
+                              ),
+                            )
+                            .toList(),
                       ),
                     ],
                   ),
@@ -162,7 +170,7 @@ class ResultAnalystScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Tingkat Keparahan: Sedang",
+                              "Tingkat Keparahan: ${result.severity}",
                               style: TextStyle(
                                 color: AppColor.indicationOrange3,
                                 fontSize: 16,
@@ -209,68 +217,23 @@ class ResultAnalystScreen extends StatelessWidget {
 
                       SizedBox(height: 12),
 
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SvgPicture.asset(
-                            "assets/icons/Analyst Icon/full_circle_of_checklist.svg",
-                            height: 22,
-                            width: 22,
-                          ),
-
-                          SizedBox(width: 12),
-
-                          Expanded(
-                            child: Text(
-                              "Istirahat yang cukup dan minum paracetamol jika demam",
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      SizedBox(height: 10),
-
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SvgPicture.asset(
-                            "assets/icons/Analyst Icon/full_circle_of_checklist.svg",
-                            height: 22,
-                            width: 22,
-                          ),
-
-                          SizedBox(width: 12),
-
-                          Expanded(
-                            child: Text(
-                              "Perbanyak minum air putih minimal 8 gelas sehari",
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      SizedBox(height: 10),
-
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SvgPicture.asset(
-                            "assets/icons/Analyst Icon/full_circle_of_checklist.svg",
-                            height: 22,
-                            width: 22,
-                          ),
-
-                          SizedBox(width: 12),
-
-                          Expanded(
-                            child: Text(
-                              "Konsultasi dokter jika gejala tidak membaik dalam 3 hari",
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ),
-                        ],
+                      Column(
+                        children: result.suggestions
+                            .map(
+                              (s) => Row(
+                                children: [
+                                  Icon(
+                                    Icons.check_circle_outline,
+                                    size: 22,
+                                    color: AppColor.teal,
+                                  ),
+                                  SizedBox(width: 12),
+                                  Expanded(child: Text(s)),
+                                  SizedBox(width: 12),
+                                ],
+                              ),
+                            )
+                            .toList(),
                       ),
                     ],
                   ),
@@ -326,26 +289,31 @@ class ResultAnalystScreen extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: AppColor.teal),
-                          borderRadius: BorderRadius.circular(15),
-                          color: AppColor.white,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
-                              blurRadius: 18,
-                              offset: Offset(0, 10),
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Ubah",
-                            style: TextStyle(
-                              color: AppColor.teal,
-                              fontWeight: FontWeight.bold,
+                      child: InkWell(
+                        onTap: () {
+                          context.push(FirstAnalystScreen(tempResult: result));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: AppColor.teal),
+                            borderRadius: BorderRadius.circular(15),
+                            color: AppColor.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                blurRadius: 18,
+                                offset: Offset(0, 10),
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Ubah",
+                              style: TextStyle(
+                                color: AppColor.teal,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
@@ -356,7 +324,28 @@ class ResultAnalystScreen extends StatelessWidget {
 
                     Expanded(
                       child: InkWell(
-                        onTap: () {
+                        onTap: () async {
+                          // 1. Simpan data jika belum tersimpan
+                          if (result.id == null) {
+                            await controller.addResult(
+                              result,
+                            ); // simpan ke database
+                          } else {
+                            await controller.updateResult(
+                              result,
+                            ); // kalau sudah ada, update
+                          }
+
+                          // 2. Tampilkan notifikasi kalau mau
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                "Hasil analisis disimpan ke riwayat",
+                              ),
+                            ),
+                          );
+
+                          // 3. Navigasi ke History
                           context.pushAndRemoveAll(
                             NavBarWidget(initialIndex: 2),
                           );
@@ -389,39 +378,6 @@ class ResultAnalystScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-
-                // SizedBox(height: 22),
-
-                // InkWell(
-                //   onTap: () {
-                //     context.pushAndRemoveAll(NavBarWidget());
-                //   },
-                //   child: Container(
-                //     width: double.infinity,
-                //     padding: EdgeInsets.symmetric(vertical: 10),
-                //     decoration: BoxDecoration(
-                //       gradient: LinearGradient(
-                //         colors: [
-                //           AppColor.teal.withOpacity(0.9),
-                //           AppColor.teal3.withOpacity(0.8),
-                //           AppColor.teal4.withOpacity(0.9),
-                //         ],
-                //         begin: Alignment(0.17, -1),
-                //         end: Alignment(0.19, 1),
-                //       ),
-                //       borderRadius: BorderRadius.circular(20),
-                //     ),
-                //     child: Center(
-                //       child: Text(
-                //         "Selesai",
-                //         style: TextStyle(
-                //           color: AppColor.white,
-                //           fontWeight: FontWeight.bold,
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -432,11 +388,13 @@ class ResultAnalystScreen extends StatelessWidget {
         child: Container(
           decoration: secondBoxDecorationConstant(),
           child: ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
+              await controller.addResult(result); // simpan ke database
+
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text("Hasil analisis disimpan ke riwayat")),
               );
-              context.push(NavBarWidget());
+              context.push(NavBarWidget(initialIndex: 0));
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,

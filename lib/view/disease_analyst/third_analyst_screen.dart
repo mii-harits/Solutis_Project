@@ -3,17 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/extension/navigator.dart';
+import 'package:solutis_project/models/disease_result_model.dart';
 import 'package:solutis_project/widgets/box_decoration.dart';
 import 'package:solutis_project/view/disease_analyst/result_analyst_screen.dart';
 
 class ThirdAnalystScreen extends StatefulWidget {
-  const ThirdAnalystScreen({super.key});
+  final DiseaseResultModel tempResult;
+  const ThirdAnalystScreen({super.key, required this.tempResult});
 
   @override
   State<ThirdAnalystScreen> createState() => _ThirdAnalystScreenState();
 }
 
 class _ThirdAnalystScreenState extends State<ThirdAnalystScreen> {
+  final TextEditingController additionalController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // isi field dengan data lama jika ada (untuk edit)
+    additionalController.text = widget.tempResult.additionalInfo;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,6 +161,7 @@ class _ThirdAnalystScreenState extends State<ThirdAnalystScreen> {
                           SizedBox(height: 15),
 
                           TextField(
+                            controller: additionalController,
                             decoration: InputDecoration(
                               hintText:
                                   "Contoh : Panas Dingin saat malam hari, Tenggorokan terasa panas....",
@@ -192,7 +204,20 @@ class _ThirdAnalystScreenState extends State<ThirdAnalystScreen> {
           decoration: secondBoxDecorationConstant(),
           child: ElevatedButton(
             onPressed: () {
-              context.push(ResultAnalystScreen());
+              // simpan input tambahan user ke tempResult
+widget.tempResult.additionalInfo = additionalController.text;
+
+// Ambil hasil analisis dari screen sebelumnya atau fungsi analisis nyata
+widget.tempResult.mainSymptoms = analysisResult.mainSymptoms; 
+widget.tempResult.suggestions = analysisResult.suggestions;   
+widget.tempResult.severity = analysisResult.severity;         
+widget.tempResult.createdAt = DateTime.now();
+
+// Simpan ke database
+await controller.addResult(widget.tempResult)
+
+// Kirim ke ResultAnalystScreen
+context.push(ResultAnalystScreen(result: widget.tempResult));
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,

@@ -1,4 +1,5 @@
 import 'package:path/path.dart';
+import 'package:solutis_project/models/disease_result_model.dart';
 import 'package:solutis_project/models/user_model.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -14,8 +15,39 @@ class DBHelper {
         await db.execute(
           'CREATE TABLE educations(id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT, title TEXT, description TEXT)',
         );
+        await db.execute('''
+          CREATE TABLE disease_results(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            complaint TEXT,
+            duration TEXT,
+            history TEXT,
+            additionalInfo TEXT,
+            mainSymptoms TEXT,
+            suggestions TEXT,
+            severity TEXT,
+            createdAt INTEGER
+          )
+        ''');
       },
-      version: 2,
+      version: 3,
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 3) {
+          // upgrade database dari versi lama ke versi 3
+          await db.execute('''
+        CREATE TABLE disease_results(
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          complaint TEXT,
+          duration TEXT,
+          history TEXT,
+          additionalInfo TEXT,
+          mainSymptoms TEXT,
+          suggestions TEXT,
+          severity TEXT,
+          createdAt INTEGER
+        )
+      ''');
+        }
+      },
     );
   }
 
@@ -40,6 +72,7 @@ class DBHelper {
     return null;
   }
 
+  // Education Session
   static Future<void> createEducation(Map<String, dynamic> data) async {
     final dbs = await db();
 
@@ -81,5 +114,44 @@ class DBHelper {
     final dbs = await db();
 
     return await dbs.delete('educations', where: 'id = ?', whereArgs: [id]);
+  }
+
+  // Analyse Disease Session
+  // INSERT
+  static Future<int> insertDiseaseResult(DiseaseResultModel result) async {
+    final dbs = await db();
+    return await dbs.insert('disease_results', result.toMap());
+  }
+
+  // GET ALL
+  static Future<List<DiseaseResultModel>> getDiseaseResults() async {
+    final dbs = await db();
+    final List<Map<String, dynamic>> maps = await dbs.query(
+      'disease_results',
+      orderBy: 'createdAt DESC',
+    );
+
+    return maps.map((e) => DiseaseResultModel.fromMap(e)).toList();
+  }
+
+  // UPDATE
+  static Future<int> updateDiseaseResult(DiseaseResultModel result) async {
+    final dbs = await db();
+    return await dbs.update(
+      'disease_results',
+      result.toMap(),
+      where: 'id = ?',
+      whereArgs: [result.id],
+    );
+  }
+
+  // DELETE
+  static Future<int> deleteDiseaseResult(int id) async {
+    final dbs = await db();
+    return await dbs.delete(
+      'disease_results',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 }
