@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:solutis_project/constant/app_color.dart';
+import 'package:solutis_project/controller/education_controller.dart';
+import 'package:solutis_project/extension/navigator.dart';
 import 'package:solutis_project/view/education/lifestyle_category_screen.dart';
 import 'package:solutis_project/view/education/obat_category_screen.dart';
 import 'package:solutis_project/view/education/penyakit_category_screen.dart';
@@ -13,8 +15,11 @@ class EducationScreen extends StatefulWidget {
 }
 
 class _EducationScreenState extends State<EducationScreen> {
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descController = TextEditingController();
+
   int selectedIndex = 0;
-  String selectedCategory = "";
+  String selectedCategory = "lifestyle";
 
   final List<Widget> categoryScreen = [
     LifestyleCategoryScreen(),
@@ -325,6 +330,34 @@ class _EducationScreenState extends State<EducationScreen> {
 
                             SizedBox(height: 10),
 
+                            DropdownButtonFormField(
+                              value: selectedCategory,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                              ),
+                              items: [
+                                DropdownMenuItem(
+                                  value: "lifestyle",
+                                  child: Text("Lifestyle"),
+                                ),
+                                DropdownMenuItem(
+                                  value: "penyakit",
+                                  child: Text("Penyakit"),
+                                ),
+                                DropdownMenuItem(
+                                  value: "obat",
+                                  child: Text("Obat"),
+                                ),
+                              ],
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedCategory = value!;
+                                });
+                              },
+                            ),
+
+                            SizedBox(height: 14),
+
                             Text(
                               "Judul",
                               style: TextStyle(
@@ -336,6 +369,7 @@ class _EducationScreenState extends State<EducationScreen> {
                             SizedBox(height: 10),
 
                             TextField(
+                              controller: titleController,
                               decoration: InputDecoration(
                                 hintText: "Masukkan Judul Edukasi...",
                                 hintStyle: TextStyle(color: AppColor.grey2),
@@ -365,6 +399,7 @@ class _EducationScreenState extends State<EducationScreen> {
                             SizedBox(height: 10),
 
                             TextField(
+                              controller: descController,
                               minLines: 5,
                               maxLines: null,
                               decoration: InputDecoration(
@@ -419,7 +454,14 @@ class _EducationScreenState extends State<EducationScreen> {
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      await EducationController.addEducation(
+                                        selectedCategory,
+                                        titleController.text,
+                                        descController.text,
+                                      );
+                                      context.pop(context);
+                                    },
                                     child: Text(
                                       "Tambahkan",
                                       style: TextStyle(

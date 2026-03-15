@@ -1,5 +1,5 @@
 import 'package:path/path.dart';
-import 'package:solutis_project/models/user.dart';
+import 'package:solutis_project/models/user_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBHelper {
@@ -7,12 +7,15 @@ class DBHelper {
     final dbPath = await getDatabasesPath();
     return openDatabase(
       join(dbPath, 'salutis.db'),
-      onCreate: (db, version) {
-        return db.execute(
+      onCreate: (db, version) async {
+        await db.execute(
           'CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, email TEXT, password TEXT)',
         );
+        await db.execute(
+          'CREATE TABLE educations(id INTEGER PRIMARY KEY AUTOINCREMENT, category TEXT, title TEXT, description TEXT)',
+        );
       },
-      version: 1,
+      version: 2,
     );
   }
 
@@ -35,5 +38,45 @@ class DBHelper {
       return UserModel.fromMap(results.first);
     }
     return null;
+  }
+
+  static Future<void> createEducation(Map<String, dynamic> data) async {
+    final dbs = await db();
+
+    await dbs.insert('educations', data);
+  }
+
+  static Future<List<Map<String, dynamic>>> getEducation(
+    String category,
+  ) async {
+    final dbs = await db();
+
+    final data = await dbs.query(
+      'educations',
+      where: 'category = ?',
+      whereArgs: [category],
+    );
+
+    print("DATA EDUCATION:");
+    print(data);
+
+    return data;
+  }
+
+  static Future<int> updateEducation(int id, Map<String, dynamic> data) async {
+    final dbs = await db();
+
+    return await dbs.update(
+      'educations',
+      data,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
+  static Future<int> deleteEducation(int id) async {
+    final dbs = await db();
+
+    return await dbs.delete('educations', where: 'id = ?', whereArgs: [id]);
   }
 }
