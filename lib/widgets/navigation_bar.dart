@@ -48,21 +48,34 @@ class _NavBarWidgetState extends State<NavBarWidget> {
             ),
             if (active)
               Positioned(
-                top: -6, // jarak cahaya dari icon
-                left: -13, // panjang horizontal bisa diperluas
-                right: -13,
+                top: -6,
+                left: -30,
+                right: -30,
                 child: Container(
-                  height: 2, // tipis
+                  height: 35, // tinggi kotak cahaya
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(2),
                     gradient: LinearGradient(
-                      colors: [
-                        AppColor.teal2.withOpacity(0.5),
-                        AppColor.teal2.withOpacity(0.0),
-                      ],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
+                      colors: [
+                        AppColor.teal2,
+                        AppColor.teal2.withOpacity(0.05),
+                        AppColor.teal2.withOpacity(0.05),
+                        AppColor.teal2.withOpacity(0.05),
+                        AppColor.teal2.withOpacity(0.05),
+                        AppColor.teal2.withOpacity(0.05),
+                        AppColor.teal2.withOpacity(0.05),
+                        AppColor.teal2.withOpacity(0.05),
+                        AppColor.teal2.withOpacity(0.05),
+                        AppColor.teal2.withOpacity(0.05),
+                        AppColor.teal2.withOpacity(0.05),
+                        AppColor.teal2.withOpacity(0.05),
+                        AppColor.teal2.withOpacity(0.05),
+                        AppColor.teal2.withOpacity(0.01),
+                        Colors.transparent,
+                      ],
                     ),
+                    borderRadius: BorderRadius.circular(0),
                   ),
                 ),
               ),
