@@ -11,7 +11,12 @@ import 'package:solutis_project/widgets/navigation_bar.dart';
 class ResultAnalystScreen extends StatelessWidget {
   final DiseaseResultModel result;
   final DiseaseController controller = DiseaseController();
-  ResultAnalystScreen({super.key, required this.result});
+  final bool fromHistory;
+  ResultAnalystScreen({
+    super.key,
+    required this.result,
+    this.fromHistory = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -394,7 +399,11 @@ class ResultAnalystScreen extends StatelessWidget {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text("Hasil analisis disimpan ke riwayat")),
               );
-              context.push(NavBarWidget(initialIndex: 0));
+              if (fromHistory) {
+                context.pop(context); // <-- Kembali ke HistoryScreen
+              } else {
+                context.push(NavBarWidget(initialIndex: 0));
+              }
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,

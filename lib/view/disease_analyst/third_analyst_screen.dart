@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:solutis_project/constant/app_color.dart';
+import 'package:solutis_project/database/sqflite.dart';
 import 'package:solutis_project/extension/navigator.dart';
+import 'package:solutis_project/helpers/disease_analyzer.dart';
 import 'package:solutis_project/models/disease_result_model.dart';
 import 'package:solutis_project/widgets/box_decoration.dart';
 import 'package:solutis_project/view/disease_analyst/result_analyst_screen.dart';
@@ -203,21 +205,18 @@ class _ThirdAnalystScreenState extends State<ThirdAnalystScreen> {
         child: Container(
           decoration: secondBoxDecorationConstant(),
           child: ElevatedButton(
-            onPressed: () {
-              // simpan input tambahan user ke tempResult
-widget.tempResult.additionalInfo = additionalController.text;
+            onPressed: () async {
+              // simpan tambahan user
+              widget.tempResult.additionalInfo = additionalController.text;
 
-// Ambil hasil analisis dari screen sebelumnya atau fungsi analisis nyata
-widget.tempResult.mainSymptoms = analysisResult.mainSymptoms; 
-widget.tempResult.suggestions = analysisResult.suggestions;   
-widget.tempResult.severity = analysisResult.severity;         
-widget.tempResult.createdAt = DateTime.now();
+              // analisis otomatis
+              final analyzedResult = analyzeDisease(widget.tempResult);
 
-// Simpan ke database
-await controller.addResult(widget.tempResult)
+              // simpan ke database
+              await DBHelper.insertDiseaseResult(analyzedResult);
 
-// Kirim ke ResultAnalystScreen
-context.push(ResultAnalystScreen(result: widget.tempResult));
+              // pindah ke ResultAnalystScreen
+              context.push(ResultAnalystScreen(result: analyzedResult));
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,

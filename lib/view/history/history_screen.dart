@@ -191,8 +191,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) =>
-                                        ResultAnalystScreen(result: r),
+                                    builder: (_) => ResultAnalystScreen(
+                                      result: r,
+                                      fromHistory: true,
+                                    ),
                                   ),
                                 );
                               },
