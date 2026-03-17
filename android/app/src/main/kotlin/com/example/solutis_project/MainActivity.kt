@@ -1,4 +1,4 @@
-package com.example.solutis_project
+package com.ppkd.salutis
 
 import io.flutter.embedding.android.FlutterActivity
 

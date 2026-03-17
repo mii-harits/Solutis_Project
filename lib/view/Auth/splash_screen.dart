@@ -3,7 +3,7 @@ import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/database/preference.dart';
 import 'package:solutis_project/extension/navigator.dart';
 import 'package:solutis_project/widgets/navigation_bar.dart';
-import 'package:solutis_project/view/Auth/login_screen.dart';
+import 'package:solutis_project/view/auth/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

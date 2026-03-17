@@ -7,7 +7,7 @@ import 'package:solutis_project/models/user_model.dart';
 import 'package:solutis_project/widgets/background.dart';
 import 'package:solutis_project/widgets/input_decoration.dart';
 import 'package:solutis_project/widgets/navigation_bar.dart';
-import 'package:solutis_project/view/Auth/register_screen.dart';
+import 'package:solutis_project/view/auth/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
