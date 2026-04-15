@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:solutis_project/constant/app_color.dart';
+import 'package:solutis_project/extension/navigator.dart';
 import 'package:solutis_project/widgets/box_decoration.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -16,7 +16,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColor.white,
-        leading: IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back)),
+        leading: IconButton(
+          onPressed: () {
+            context.pop();
+          },
+          icon: Icon(Icons.arrow_back),
+        ),
         title: Text(
           "Edit Profile",
           style: TextStyle(fontWeight: FontWeight.w500),

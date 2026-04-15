@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:solutis_project/constant/app_color.dart';
-import 'package:solutis_project/database/preference.dart';
-import 'package:solutis_project/database/sqflite.dart';
 import 'package:solutis_project/extension/navigator.dart';
-import 'package:solutis_project/models/user_model.dart';
+import 'package:solutis_project/service/firebase_service.dart';
 import 'package:solutis_project/widgets/background.dart';
 import 'package:solutis_project/widgets/input_decoration.dart';
 import 'package:solutis_project/widgets/navigation_bar.dart';
@@ -175,19 +173,20 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                final UserModel? login =
-                                    await DBHelper.loginUser(
-                                      email: emailController.text,
-                                      password: passwordController.text,
-                                    );
-                                if (login != null) {
-                                  PreferenceHandler().storingIsLogin(true);
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text("Login Berhasil")),
+                                try {
+                                  final user = await FirebaseService.loginUser(
+                                    email: emailController.text,
+                                    password: passwordController.text,
                                   );
-                                  await Future.delayed(Duration(seconds: 2));
-                                  context.push(NavBarWidget());
-                                } else {
+
+                                  if (user != null) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text("Login Berhasil")),
+                                    );
+
+                                    context.push(NavBarWidget());
+                                  }
+                                } catch (e) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text(

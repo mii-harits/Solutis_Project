@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:solutis_project/constant/app_color.dart';
-import 'package:solutis_project/database/preference.dart';
-import 'package:solutis_project/database/sqflite.dart';
 import 'package:solutis_project/extension/navigator.dart';
-import 'package:solutis_project/models/user_model.dart';
+import 'package:solutis_project/service/firebase_service.dart';
 import 'package:solutis_project/widgets/background.dart';
 import 'package:solutis_project/widgets/input_decoration.dart';
 import 'package:solutis_project/widgets/navigation_bar.dart';
@@ -256,21 +254,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 backgroundColor: Colors.transparent,
                                 shadowColor: Colors.transparent,
                               ),
-                              onPressed: () {
+                              onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  PreferenceHandler().storingIsLogin(true);
-                                  DBHelper.registerUser(
-                                    UserModel(
+                                  try {
+                                    await FirebaseService.registerUser(
                                       email: emailController.text,
                                       password: passwordController.text,
-                                    ),
-                                  );
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text("Pendaftaran Berhasil"),
-                                    ),
-                                  );
-                                  context.push(NavBarWidget());
+                                      username: namaController.text,
+                                    );
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text("Registrasi Berhasil"),
+                                      ),
+                                    );
+
+                                    context.push(NavBarWidget());
+                                  } catch (e) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text("Register gagal: $e"),
+                                      ),
+                                    );
+                                  }
                                 }
                               },
                               child: Stack(

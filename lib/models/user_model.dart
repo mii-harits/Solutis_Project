@@ -1,26 +1,19 @@
-import 'dart:convert';
-
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 class UserModel {
-  final int? id;
+  final String uid;
   final String email;
-  final String password;
-  UserModel({this.id, required this.email, required this.password});
+  final String username;
+
+  UserModel({required this.uid, required this.email, required this.username});
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{'id': id, 'email': email, 'password': password};
+    return {'email': email, 'username': username};
   }
 
-  factory UserModel.fromMap(Map<String, dynamic> map) {
+  factory UserModel.fromMap(Map<String, dynamic> map, String documentId) {
     return UserModel(
-      id: map['id'] != null ? map['id'] as int : null,
-      email: map['email'] as String,
-      password: map['password'] as String,
+      uid: documentId,
+      email: map['email'] ?? '',
+      username: map['username'] ?? '',
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory UserModel.fromJson(String source) =>
-      UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

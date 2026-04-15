@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/database/preference.dart';
 import 'package:solutis_project/extension/navigator.dart';
+import 'package:solutis_project/view/profile/edit_profile_screen.dart';
 import 'package:solutis_project/widgets/box_decoration.dart';
 import 'package:solutis_project/view/auth/login_screen.dart';
 
@@ -127,25 +128,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                         SizedBox(height: 15),
 
-                        Container(
-                          padding: EdgeInsets.symmetric(vertical: 7),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: AppColor.grey2.withOpacity(0.08),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                "assets/icons/Profile Icon/Edit.svg",
-                              ),
-                              SizedBox(width: 7),
+                        InkWell(
+                          onTap: () {
+                            context.push(EditProfileScreen());
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 7),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              color: AppColor.grey2.withOpacity(0.08),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/icons/Profile Icon/Edit.svg",
+                                ),
+                                SizedBox(width: 7),
 
-                              Text(
-                                "Edit Profil",
-                                style: TextStyle(color: AppColor.teal),
-                              ),
-                            ],
+                                Text(
+                                  "Edit Profil",
+                                  style: TextStyle(color: AppColor.teal),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ],

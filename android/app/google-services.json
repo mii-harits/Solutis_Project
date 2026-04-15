@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "562520608317",
+    "project_id": "salutis-a7334",
+    "storage_bucket": "salutis-a7334.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562520608317:android:a15e230f3ad7b732ce6454",
+        "android_client_info": {
+          "package_name": "com.ppkd.salutis"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCApoksUG1NE2dz4gsF1Fr7xiJP7uiG55o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

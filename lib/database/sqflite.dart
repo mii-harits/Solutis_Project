@@ -56,21 +56,21 @@ class DBHelper {
     await dbs.insert('users', user.toMap());
   }
 
-  static Future<UserModel?> loginUser({
-    required String email,
-    required String password,
-  }) async {
-    final dbs = await db();
-    final List<Map<String, dynamic>> results = await dbs.query(
-      "users",
-      where: 'email = ? AND password = ?',
-      whereArgs: [email, password],
-    );
-    if (results.isNotEmpty) {
-      return UserModel.fromMap(results.first);
-    }
-    return null;
-  }
+  // static Future<UserModel?> loginUser({
+  //   required String email,
+  //   required String password,
+  // }) async {
+  //   final dbs = await db();
+  //   final List<Map<String, dynamic>> results = await dbs.query(
+  //     "users",
+  //     where: 'email = ? AND password = ?',
+  //     whereArgs: [email, password],
+  //   );
+  //   if (results.isNotEmpty) {
+  //     return UserModel.fromMap(results.first);
+  //   }
+  //   return null;
+  // }
 
   // Education Session
   static Future<void> createEducation(Map<String, dynamic> data) async {
