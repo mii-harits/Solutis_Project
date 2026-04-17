@@ -34,12 +34,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
   }
 
   // Fungsi hapus riwayat berdasarkan id
-  void deleteResult(int id) async {
+  void deleteResult(String id) async {
     await controller.deleteResult(id);
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text("Riwayat berhasil dihapus")));
-    loadResults(); // reload data setelah hapus
+    loadResults();
   }
 
   void searchResults(String query) {
@@ -174,7 +174,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     : Column(
                         children: filteredResults.map((r) {
                           return Dismissible(
-                            key: Key(r.id.toString()),
+                            key: Key(r.id!),
                             direction: DismissDirection.endToStart,
                             background: Container(
                               alignment: Alignment.centerRight,

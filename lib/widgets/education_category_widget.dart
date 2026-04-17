@@ -70,7 +70,7 @@ class _EducationCategoryWidgetState extends State<EducationCategoryWidget> {
                 final item = data[index];
 
                 return Dismissible(
-                  key: Key(item['id'].toString()),
+                  key: Key(item.id.toString()),
                   background: Container(
                     color: Colors.red,
                     alignment: Alignment.centerLeft,
@@ -91,7 +91,7 @@ class _EducationCategoryWidgetState extends State<EducationCategoryWidget> {
                         builder: (context) => AlertDialog(
                           title: Text("Hapus Informasi"),
                           content: Text(
-                            "Apakah kamu yakin ingin menghapus '${item['title']}'?",
+                            "Apakah kamu yakin ingin menghapus '${item.title}'?",
                           ),
                           actions: [
                             TextButton(
@@ -112,7 +112,7 @@ class _EducationCategoryWidgetState extends State<EducationCategoryWidget> {
                       );
 
                       if (confirm == true) {
-                        await EducationController.deleteEducation(item['id']);
+                        await EducationController.deleteEducation(item.id);
                         setState(() {}); // refresh list
                         return true;
                       }
@@ -120,10 +120,10 @@ class _EducationCategoryWidgetState extends State<EducationCategoryWidget> {
                     } else {
                       // Buat controller untuk pre-fill data
                       TextEditingController editTitle = TextEditingController(
-                        text: item['title'],
+                        text: item.title,
                       );
                       TextEditingController editDesc = TextEditingController(
-                        text: item['description'],
+                        text: item.description,
                       );
 
                       // Tampilkan modal bottom sheet
@@ -188,10 +188,9 @@ class _EducationCategoryWidgetState extends State<EducationCategoryWidget> {
                                           ),
                                           onPressed: () async {
                                             // Cek perubahan
-                                            if (editTitle.text !=
-                                                    item['title'] ||
+                                            if (editTitle.text != item.title ||
                                                 editDesc.text !=
-                                                    item['description']) {
+                                                    item.description) {
                                               final discard = await showDialog(
                                                 context: context,
                                                 builder: (context) => AlertDialog(
@@ -249,7 +248,7 @@ class _EducationCategoryWidgetState extends State<EducationCategoryWidget> {
                                           ),
                                           onPressed: () async {
                                             await EducationController.updateEducation(
-                                              item['id'],
+                                              item.id,
                                               editTitle.text,
                                               editDesc.text,
                                             );
@@ -284,12 +283,12 @@ class _EducationCategoryWidgetState extends State<EducationCategoryWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            item['title'],
+                            item.title,
                             style: const TextStyle(fontSize: 17),
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            item['description'],
+                            item.description,
                             style: TextStyle(
                               fontSize: 14,
                               color: AppColor.grey2,

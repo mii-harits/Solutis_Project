@@ -86,7 +86,7 @@ class ResultAnalystScreen extends StatelessWidget {
                             width: 25,
                           ),
 
-                          SizedBox(width: 20),
+                          SizedBox(width: 12),
 
                           Text(
                             "Hasil Analisis",
@@ -102,23 +102,47 @@ class ResultAnalystScreen extends StatelessWidget {
 
                       Text(
                         "Kemungkinan Kondisi:",
-                        style: TextStyle(fontSize: 15),
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
 
                       SizedBox(height: 12),
 
                       Text(
-                        result.mainSymptoms.join(
-                          ", ",
-                        ), // untuk kemungkinan kondisi / gejala utama
+                        result.diseaseName.isEmpty
+                            ? "Tidak diketahui"
+                            : result.diseaseName,
                         style: TextStyle(fontSize: 15),
                       ),
 
+                      if (result.diseaseName == "Tidak diketahui")
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: Text(
+                            "Sistem tidak dapat mengenali penyakit dari gejala ini.",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+
+                      SizedBox(height: 8),
+
+                      Text(
+                        "Tingkat keyakinan: ${(result.confidence * 100).toStringAsFixed(0)}%",
+                        style: TextStyle(color: Colors.grey),
+                      ),
                       Divider(color: Colors.black),
 
-                      SizedBox(height: 12),
+                      SizedBox(height: 15),
 
-                      Text("Gejala Utama:", style: TextStyle(fontSize: 15)),
+                      Text(
+                        "Gejala Utama:",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
 
                       SizedBox(height: 12),
 
@@ -128,7 +152,7 @@ class ResultAnalystScreen extends StatelessWidget {
                               (symptom) => Row(
                                 children: [
                                   Icon(
-                                    Icons.warning_outlined,
+                                    Icons.check_circle,
                                     color: Colors.orange,
                                   ),
                                   SizedBox(width: 6),
@@ -137,6 +161,42 @@ class ResultAnalystScreen extends StatelessWidget {
                               ),
                             )
                             .toList(),
+                      ),
+
+                      SizedBox(height: 15),
+
+                      Text(
+                        "Gejala lain yang mungkin:",
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+
+                      SizedBox(height: 12),
+
+                      Column(
+                        children: result.otherSymptoms.isEmpty
+                            ? [
+                                Text(
+                                  "Tidak ada gejala tambahan",
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ]
+                            : result.otherSymptoms
+                                  .map(
+                                    (symptom) => Row(
+                                      children: [
+                                        Icon(
+                                          Icons.info_outline,
+                                          color: Colors.grey,
+                                        ),
+                                        SizedBox(width: 6),
+                                        Text(symptom),
+                                      ],
+                                    ),
+                                  )
+                                  .toList(),
                       ),
                     ],
                   ),
@@ -336,7 +396,7 @@ class ResultAnalystScreen extends StatelessWidget {
                               result,
                             ); // simpan ke database
                           } else {
-                            await controller.updateResult(
+                            await controller.addResult(
                               result,
                             ); // kalau sudah ada, update
                           }
@@ -394,8 +454,6 @@ class ResultAnalystScreen extends StatelessWidget {
           decoration: secondBoxDecorationConstant(),
           child: ElevatedButton(
             onPressed: () async {
-              await controller.addResult(result); // simpan ke database
-
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text("Hasil analisis disimpan ke riwayat")),
               );

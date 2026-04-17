@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:solutis_project/constant/app_color.dart';
-import 'package:solutis_project/database/sqflite.dart';
+import 'package:solutis_project/controller/disease_controller.dart';
 import 'package:solutis_project/extension/navigator.dart';
-import 'package:solutis_project/helpers/disease_analyzer.dart';
+import 'package:solutis_project/models/disease_model.dart';
 import 'package:solutis_project/models/disease_result_model.dart';
+import 'package:solutis_project/service/disease_service.dart';
 import 'package:solutis_project/widgets/box_decoration.dart';
 import 'package:solutis_project/view/disease_analyst/result_analyst_screen.dart';
 
@@ -25,6 +26,17 @@ class _ThirdAnalystScreenState extends State<ThirdAnalystScreen> {
     super.initState();
     // isi field dengan data lama jika ada (untuk edit)
     additionalController.text = widget.tempResult.additionalInfo;
+
+    fetchData(); // 🔥 tambahkan ini
+  }
+
+  void fetchData() async {
+    final data = await DiseaseService.getDiseases();
+
+    for (var d in data) {
+      print("Disease: ${d.name}");
+      print("Symptoms: ${d.symptoms}");
+    }
   }
 
   @override
@@ -206,17 +218,77 @@ class _ThirdAnalystScreenState extends State<ThirdAnalystScreen> {
           decoration: secondBoxDecorationConstant(),
           child: ElevatedButton(
             onPressed: () async {
-              // simpan tambahan user
-              widget.tempResult.additionalInfo = additionalController.text;
+              // 🔥 ambil data dari Firebase
+              final diseases = await DiseaseService.getDiseases();
 
-              // analisis otomatis
-              final analyzedResult = analyzeDisease(widget.tempResult);
+              final complaint = widget.tempResult.complaint.toLowerCase();
 
-              // simpan ke database
-              await DBHelper.insertDiseaseResult(analyzedResult);
+              // 🔥 cari yang paling cocok
+              DiseaseModel? bestMatch;
+              int highestScore = 0;
 
-              // pindah ke ResultAnalystScreen
-              context.push(ResultAnalystScreen(result: analyzedResult));
+              for (var disease in diseases) {
+                int score = disease.symptoms.where((s) {
+                  return complaint.toLowerCase().contains(s.toLowerCase());
+                }).length;
+
+                if (score > highestScore) {
+                  highestScore = score;
+                  bestMatch = disease;
+                }
+              }
+
+              String diseaseName;
+              List<String> symptoms;
+              List<String> suggestions;
+              double confidence;
+
+              // 🔥 HANDLE JIKA TIDAK DITEMUKAN
+              if (bestMatch == null) {
+                diseaseName = "Tidak diketahui";
+                symptoms = [];
+                suggestions = [
+                  "Gejala tidak cukup jelas, silakan isi lebih detail atau konsultasi dokter",
+                ];
+                confidence = 0;
+              } else {
+                double percentage = highestScore / bestMatch.symptoms.length;
+
+                diseaseName = bestMatch.name;
+                symptoms = bestMatch.symptoms.where((s) {
+                  return complaint.contains(s.toLowerCase());
+                }).toList();
+                suggestions = [bestMatch.solution];
+                confidence = percentage;
+              }
+
+              String severity;
+
+              if (confidence >= 0.7) {
+                severity = "Berat";
+              } else if (confidence >= 0.4) {
+                severity = "Sedang";
+              } else {
+                severity = "Ringan";
+              }
+
+              final result = widget.tempResult.copyWith(
+                diseaseName: diseaseName,
+                mainSymptoms: symptoms,
+                otherSymptoms: bestMatch == null
+                    ? []
+                    : bestMatch.symptoms.where((s) {
+                        return !complaint.contains(s.toLowerCase());
+                      }).toList(),
+                suggestions: suggestions,
+                severity: severity,
+                confidence: confidence,
+              );
+
+              final controller = DiseaseController();
+              await controller.addResult(result); // 🔥 SAVE DI SINI
+
+              context.push(ResultAnalystScreen(result: result));
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,

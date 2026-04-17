@@ -23,6 +23,9 @@ class _FirstAnalystScreenState extends State<FirstAnalystScreen> {
     duration: '',
     history: '',
     additionalInfo: '',
+    diseaseName: '',
+    confidence: 0,
+    otherSymptoms: [], // nanti hasil analisa
     mainSymptoms: [], // nanti hasil analisa
     suggestions: [], // nanti hasil analisa
     severity: '', // nanti hasil analisa

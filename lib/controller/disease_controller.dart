@@ -1,20 +1,22 @@
-import 'package:solutis_project/database/sqflite.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:solutis_project/models/disease_result_model.dart';
+import 'package:solutis_project/service/disease_service.dart';
 
 class DiseaseController {
+  final String userId = FirebaseAuth.instance.currentUser!.uid;
+
+  // GET HISTORY
   Future<List<DiseaseResultModel>> getAllResults() async {
-    return await DBHelper.getDiseaseResults();
+    return await DiseaseService.getHistory(userId);
   }
 
+  // ADD
   Future<void> addResult(DiseaseResultModel result) async {
-    await DBHelper.insertDiseaseResult(result);
+    await DiseaseService.saveResult(userId: userId, result: result);
   }
 
-  Future<void> updateResult(DiseaseResultModel result) async {
-    await DBHelper.updateDiseaseResult(result);
-  }
-
-  Future<void> deleteResult(int id) async {
-    await DBHelper.deleteDiseaseResult(id);
+  // DELETE
+  Future<void> deleteResult(String id) async {
+    await DiseaseService.deleteResult(id);
   }
 }

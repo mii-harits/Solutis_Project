@@ -298,254 +298,185 @@ class _EducationScreenState extends State<EducationScreen> {
         elevation: 6,
         onPressed: () {
           showModalBottomSheet(
-            backgroundColor: Colors.transparent,
             context: context,
             isScrollControlled: true,
+            backgroundColor: Colors.transparent,
             builder: (context) {
-              return FractionallySizedBox(
-                heightFactor: 0.75,
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 30),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: AppColor.white,
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(25),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        "Tambah Informasi Kesehatan",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+              return DraggableScrollableSheet(
+                initialChildSize: 0.85,
+                minChildSize: 0.6,
+                maxChildSize: 0.95,
+                builder: (context, scrollController) {
+                  return Container(
+                    padding: EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: AppColor.white,
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(25),
                       ),
+                    ),
+                    child: ListView(
+                      controller: scrollController,
+                      children: [
+                        Center(
+                          child: Container(
+                            width: 40,
+                            height: 5,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
 
-                      SizedBox(height: 20),
-                      Divider(thickness: 1),
-                      SizedBox(height: 20),
+                        SizedBox(height: 20),
 
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Text(
+                          "Tambah Edukasi",
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+
+                        SizedBox(height: 6),
+
+                        Text(
+                          "Tambahkan informasi kesehatan yang bermanfaat",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+
+                        SizedBox(height: 24),
+
+                        // KATEGORI
+                        _buildFieldLabel("Kategori"),
+                        SizedBox(height: 8),
+                        DropdownButtonFormField<String>(
+                          value: selectedCategory,
+                          decoration: _inputDecoration(icon: Icons.category),
+                          items: [
+                            DropdownMenuItem(
+                              value: "lifestyle",
+                              child: Text("Lifestyle"),
+                            ),
+                            DropdownMenuItem(
+                              value: "penyakit",
+                              child: Text("Penyakit"),
+                            ),
+                            DropdownMenuItem(
+                              value: "obat",
+                              child: Text("Obat"),
+                            ),
+                          ],
+                          onChanged: (value) {
+                            setState(() {
+                              selectedCategory = value!;
+                            });
+                          },
+                        ),
+
+                        SizedBox(height: 16),
+
+                        // JUDUL
+                        _buildFieldLabel("Judul"),
+                        SizedBox(height: 8),
+                        TextField(
+                          controller: titleController,
+                          decoration: _inputDecoration(
+                            icon: Icons.title,
+                            hint: "Contoh: Cara Menjaga Pola Tidur",
+                          ),
+                        ),
+
+                        SizedBox(height: 16),
+
+                        // DESKRIPSI
+                        _buildFieldLabel("Deskripsi"),
+                        SizedBox(height: 8),
+                        TextField(
+                          controller: descController,
+                          minLines: 4,
+                          maxLines: null,
+                          decoration: _inputDecoration(
+                            icon: Icons.description,
+                            hint: "Jelaskan secara detail...",
+                          ),
+                        ),
+
+                        SizedBox(height: 30),
+
+                        Row(
                           children: [
-                            Text(
-                              "Kategory",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
+                            Expanded(
+                              child: OutlinedButton(
+                                onPressed: () => Navigator.pop(context),
+                                style: OutlinedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
+                                ),
+                                child: Text("Batal"),
                               ),
                             ),
 
-                            SizedBox(height: 10),
+                            SizedBox(width: 12),
 
-                            DropdownButtonFormField(
-                              value: selectedCategory,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  await EducationController.addEducation(
+                                    selectedCategory,
+                                    titleController.text,
+                                    descController.text,
+                                  );
+
+                                  titleController.clear();
+                                  descController.clear();
+
+                                  Navigator.pop(context);
+                                  setState(() {});
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColor.teal,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
+                                ),
+                                child: Text("Simpan"),
                               ),
-                              items: [
-                                DropdownMenuItem(
-                                  value: "lifestyle",
-                                  child: Text("Lifestyle"),
-                                ),
-                                DropdownMenuItem(
-                                  value: "penyakit",
-                                  child: Text("Penyakit"),
-                                ),
-                                DropdownMenuItem(
-                                  value: "obat",
-                                  child: Text("Obat"),
-                                ),
-                              ],
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedCategory = value!;
-                                });
-                              },
-                            ),
-
-                            SizedBox(height: 14),
-
-                            Text(
-                              "Judul",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                              ),
-                            ),
-
-                            SizedBox(height: 10),
-
-                            TextField(
-                              controller: titleController,
-                              decoration: InputDecoration(
-                                hintText: "Masukkan Judul Edukasi...",
-                                hintStyle: TextStyle(color: AppColor.grey2),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColor.grey2.withOpacity(0.7),
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColor.grey2.withOpacity(0.7),
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            SizedBox(height: 14),
-
-                            Text(
-                              "Deskripsi",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16,
-                              ),
-                            ),
-
-                            SizedBox(height: 10),
-
-                            TextField(
-                              controller: descController,
-                              minLines: 5,
-                              maxLines: null,
-                              decoration: InputDecoration(
-                                hintText: "Masukkan Deskripsi Edukasi...",
-                                hintStyle: TextStyle(color: AppColor.grey2),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColor.grey2.withOpacity(0.7),
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: AppColor.grey2.withOpacity(0.7),
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            SizedBox(height: 30),
-
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: AppColor.redHeight,
-                                      foregroundColor: AppColor.white,
-                                      elevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                    ),
-                                    onPressed: () async {
-                                      // Cek apakah semua field kosong
-                                      if (titleController.text.isEmpty &&
-                                          descController.text.isEmpty) {
-                                        Navigator.pop(
-                                          context,
-                                        ); // langsung tutup bottom sheet
-                                      } else {
-                                        // Ada isi → tampilkan konfirmasi
-                                        final discard = await showDialog(
-                                          context: context,
-                                          builder: (context) => AlertDialog(
-                                            title: Text("Buang Perubahan?"),
-                                            content: Text(
-                                              "Kamu telah memasukkan beberapa data. Apakah kamu ingin membuangnya?",
-                                            ),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                  context,
-                                                  false,
-                                                ),
-                                                child: Text(
-                                                  "Batal",
-                                                ), // lanjutkan editing
-                                              ),
-                                              TextButton(
-                                                onPressed: () => Navigator.pop(
-                                                  context,
-                                                  true,
-                                                ),
-                                                child: Text(
-                                                  "Ya",
-                                                  style: TextStyle(
-                                                    color: Colors.red,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        );
-
-                                        if (discard == true)
-                                          Navigator.pop(
-                                            context,
-                                          ); // tutup bottom sheet
-                                      }
-                                    },
-                                    child: Text(
-                                      "Batal",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-
-                                SizedBox(width: 12),
-
-                                Expanded(
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: AppColor.teal,
-                                      foregroundColor: AppColor.white,
-                                      elevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                    ),
-                                    onPressed: () async {
-                                      await EducationController.addEducation(
-                                        selectedCategory,
-                                        titleController.text,
-                                        descController.text,
-                                      );
-                                      titleController.clear();
-                                      descController.clear();
-
-                                      setState(() {});
-                                      context.pop(context);
-                                    },
-                                    child: Text(
-                                      "Tambahkan",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
                             ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                ),
+                      ],
+                    ),
+                  );
+                },
               );
             },
           );
         },
+
         child: Icon(Icons.add, color: AppColor.white),
+      ),
+    );
+  }
+
+  Widget _buildFieldLabel(String text) {
+    return Text(
+      text,
+      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+    );
+  }
+
+  InputDecoration _inputDecoration({IconData? icon, String? hint}) {
+    return InputDecoration(
+      hintText: hint,
+      prefixIcon: icon != null ? Icon(icon) : null,
+      filled: true,
+      fillColor: Colors.grey[100],
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(14),
+        borderSide: BorderSide.none,
       ),
     );
   }

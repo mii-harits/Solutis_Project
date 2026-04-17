@@ -118,32 +118,32 @@ class DBHelper {
 
   // Analyse Disease Session
   // INSERT
-  static Future<int> insertDiseaseResult(DiseaseResultModel result) async {
-    final dbs = await db();
-    return await dbs.insert('disease_results', result.toMap());
-  }
+  // static Future<int> insertDiseaseResult(DiseaseResultModel result) async {
+  //   final dbs = await db();
+  //   return await dbs.insert('disease_results', result.toMap());
+  // }
 
-  // GET ALL
-  static Future<List<DiseaseResultModel>> getDiseaseResults() async {
-    final dbs = await db();
-    final List<Map<String, dynamic>> maps = await dbs.query(
-      'disease_results',
-      orderBy: 'createdAt DESC',
-    );
+  // // GET ALL
+  // static Future<List<DiseaseResultModel>> getDiseaseResults() async {
+  //   final dbs = await db();
+  //   final List<Map<String, dynamic>> maps = await dbs.query(
+  //     'disease_results',
+  //     orderBy: 'createdAt DESC',
+  //   );
 
-    return maps.map((e) => DiseaseResultModel.fromMap(e)).toList();
-  }
+  //   // return maps.map((e) => DiseaseResultModel.fromMap(e)).toList();
+  // }
 
   // UPDATE
-  static Future<int> updateDiseaseResult(DiseaseResultModel result) async {
-    final dbs = await db();
-    return await dbs.update(
-      'disease_results',
-      result.toMap(),
-      where: 'id = ?',
-      whereArgs: [result.id],
-    );
-  }
+  // static Future<int> updateDiseaseResult(DiseaseResultModel result) async {
+  //   final dbs = await db();
+  //   return await dbs.update(
+  //     'disease_results',
+  //     result.toMap(),
+  //     where: 'id = ?',
+  //     whereArgs: [result.id],
+  //   );
+  // }
 
   // DELETE
   static Future<int> deleteDiseaseResult(int id) async {
