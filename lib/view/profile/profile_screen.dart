@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/database/preference.dart';
 import 'package:solutis_project/extension/navigator.dart';
+import 'package:solutis_project/service/google_auth_service.dart';
 import 'package:solutis_project/view/profile/edit_profile_screen.dart';
 import 'package:solutis_project/widgets/box_decoration.dart';
 import 'package:solutis_project/view/auth/login_screen.dart';
@@ -746,8 +747,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   SizedBox(height: 25),
 
                   InkWell(
-                    onTap: () {
-                      PreferenceHandler().deleteIsLogin();
+                    onTap: () async {
+                      await AuthService.logout();
+
+                      await PreferenceHandler().deleteIsLogin();
+
                       context.pushAndRemoveAll(LoginScreen());
                     },
                     child: Container(

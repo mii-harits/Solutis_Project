@@ -28,4 +28,16 @@ class PreferenceHandler {
   Future<void> deleteIsLogin() async {
     _preferences.remove(_isLogin);
   }
+
+  static const String _hasLogin = 'hasEverLogin';
+
+  static Future<void> setHasEverLogin(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_hasLogin, value);
+  }
+
+  static Future<bool> getHasEverLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_hasLogin) ?? false;
+  }
 }

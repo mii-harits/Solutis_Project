@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:solutis_project/constant/app_color.dart';
+import 'package:solutis_project/database/preference.dart';
 import 'package:solutis_project/extension/navigator.dart';
 import 'package:solutis_project/service/firebase_service.dart';
+import 'package:solutis_project/service/google_auth_service.dart';
+import 'package:solutis_project/utils/snackbar_helper.dart';
 import 'package:solutis_project/widgets/background.dart';
 import 'package:solutis_project/widgets/input_decoration.dart';
 import 'package:solutis_project/widgets/navigation_bar.dart';
@@ -28,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           BackgroundScreen(),
@@ -36,8 +40,8 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               Image.asset(
                 "assets/images/Logo/Salutis_logo_2.png",
-                width: 125,
-                height: 125,
+                width: 115,
+                height: 115,
               ),
 
               SizedBox(height: 20),
@@ -48,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Container(
                 padding: EdgeInsets.all(24.0),
-                margin: EdgeInsets.all(24.0),
+                margin: EdgeInsets.symmetric(vertical: 14, horizontal: 24),
                 decoration: BoxDecoration(
                   border: Border.all(color: AppColor.white),
                   borderRadius: BorderRadius.circular(20),
@@ -60,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Email / Username",
+                        "Email",
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w500,
@@ -180,19 +184,27 @@ class _LoginScreenState extends State<LoginScreen> {
                                   );
 
                                   if (user != null) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text("Login Berhasil")),
+                                    SnackBarHelper.show(
+                                      context,
+                                      message: "Login Berhasil",
+                                    );
+
+                                    /// 🔥 TAMBAHKAN INI
+                                    await PreferenceHandler().storingIsLogin(
+                                      true,
+                                    );
+                                    await PreferenceHandler.setHasEverLogin(
+                                      true,
                                     );
 
                                     context.push(NavBarWidget());
                                   }
                                 } catch (e) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        "Login gagal, email atau password salah",
-                                      ),
-                                    ),
+                                  SnackBarHelper.show(
+                                    context,
+                                    message:
+                                        "Login gagal, Email atau Password salah",
+                                    isError: true,
                                   );
                                 }
                               }
@@ -253,29 +265,62 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       SizedBox(height: 5),
 
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Positioned(
-                                left: 5,
-                                child: Image.asset(
-                                  "assets/images/Google/Google Logo.png",
-                                  width: 24,
-                                  height: 24,
-                                ),
-                              ),
-                              Center(
-                                child: Text(
-                                  "Masuk Dengan Google",
-                                  style: TextStyle(color: Colors.black87),
-                                ),
-                              ),
-                            ],
+                      ElevatedButton(
+                        onPressed: () async {
+                          try {
+                            final user = await AuthService.signInWithGoogle();
+
+                            if (user != null) {
+                              SnackBarHelper.show(
+                                context,
+                                message: "Login Berhasil",
+                              );
+
+                              print("Login berhasil: ${user.email}");
+                              await PreferenceHandler().storingIsLogin(true);
+                              await PreferenceHandler.setHasEverLogin(true);
+
+                              context.pushAndRemoveAll(NavBarWidget());
+                            } else {
+                              /// 🔥 USER CANCEL LOGIN (beda dengan error)
+                              SnackBarHelper.show(
+                                context,
+                                message: "Login dibatalkan",
+                                isError: true,
+                              );
+                            }
+                          } catch (e) {
+                            /// 🔥 ERROR (misalnya jaringan / config / dll)
+                            SnackBarHelper.show(
+                              context,
+                              message: "Login Google gagal, silakan coba lagi",
+                              isError: true,
+                            );
+
+                            print("Google Login Error: $e");
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          elevation: 2,
+                          minimumSize: const Size(double.infinity, 48),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
                           ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/images/Google/Google Logo.png",
+                              height: 24,
+                            ),
+                            const SizedBox(width: 12),
+                            const Text(
+                              "Masuk dengan Google",
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ],
                         ),
                       ),
                     ],

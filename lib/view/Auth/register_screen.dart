@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/extension/navigator.dart';
 import 'package:solutis_project/service/firebase_service.dart';
+import 'package:solutis_project/utils/snackbar_helper.dart';
 import 'package:solutis_project/widgets/background.dart';
 import 'package:solutis_project/widgets/input_decoration.dart';
 import 'package:solutis_project/widgets/navigation_bar.dart';
@@ -142,6 +143,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         TextFormField(
                           obscureText: isVisibility,
                           controller: passwordController,
+                          style: TextStyle(fontSize: 14),
                           decoration: decorationConstant(
                             hintText: 'Masukkan Password',
                             prefixIcon: Icon(Icons.lock_outline),
@@ -197,6 +199,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         TextFormField(
                           obscureText: _isVisibility,
                           controller: konfirmasiPasswordController,
+                          style: TextStyle(fontSize: 14),
                           decoration: decorationConstant(
                             hintText: 'Konfirmasi Password',
                             prefixIcon: Icon(Icons.lock_outline),
@@ -263,18 +266,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       username: namaController.text,
                                     );
 
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text("Registrasi Berhasil"),
-                                      ),
+                                    SnackBarHelper.show(
+                                      context,
+                                      message: "Register Berhasil",
                                     );
 
                                     context.push(NavBarWidget());
                                   } catch (e) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text("Register gagal: $e"),
-                                      ),
+                                    String message = "Terjadi kesalahan";
+
+                                    if (e.toString().contains(
+                                      "invalid-email",
+                                    )) {
+                                      message = "Email tidak valid";
+                                    } else if (e.toString().contains(
+                                      "email-already-in-use",
+                                    )) {
+                                      message = "Email sudah digunakan";
+                                    } else if (e.toString().contains(
+                                      "weak-password",
+                                    )) {
+                                      message = "Password terlalu lemah";
+                                    }
+
+                                    SnackBarHelper.show(
+                                      context,
+                                      message: "Register gagal: $message",
+                                      isError: true,
                                     );
                                   }
                                 }

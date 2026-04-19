@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/database/preference.dart';
 import 'package:solutis_project/extension/navigator.dart';
+import 'package:solutis_project/view/auth/onboarding_screen.dart';
 import 'package:solutis_project/widgets/navigation_bar.dart';
 import 'package:solutis_project/view/auth/login_screen.dart';
 
@@ -20,12 +21,21 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void autoLogin() async {
-    await Future.delayed(Duration(seconds: 5));
-    bool? data = await PreferenceHandler.getIsLogin();
-    print(data);
-    if (data == true) {
+    await Future.delayed(Duration(seconds: 3));
+
+    final isLogin = await PreferenceHandler.getIsLogin();
+    final hasEverLogin = await PreferenceHandler.getHasEverLogin();
+
+    if (!mounted) return;
+
+    if (!hasEverLogin) {
+      /// 🔥 BELUM PERNAH LOGIN → ONBOARDING
+      context.pushAndRemoveAll(OnboardingScreen());
+    } else if (isLogin == true) {
+      /// 🔥 SUDAH LOGIN → HOME
       context.pushAndRemoveAll(NavBarWidget());
     } else {
+      /// 🔥 SUDAH PERNAH LOGIN TAPI LOGOUT → LOGIN
       context.pushAndRemoveAll(LoginScreen());
     }
   }

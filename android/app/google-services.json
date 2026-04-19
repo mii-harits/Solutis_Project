@@ -12,7 +12,20 @@
           "package_name": "com.ppkd.salutis"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "562520608317-m4m4ug76u1qlh545h9v6d485hruso02g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ppkd.salutis",
+            "certificate_hash": "ba69dd4dcc218fa66e83ac74dc6c54426fe3b7e6"
+          }
+        },
+        {
+          "client_id": "562520608317-tvk2cc6pfghn0405kgdcfg5rucin2990.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCApoksUG1NE2dz4gsF1Fr7xiJP7uiG55o"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "562520608317-tvk2cc6pfghn0405kgdcfg5rucin2990.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "562520608317-i659la0c0cqimu8br1cl2sdvjb5asn3a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.solutisProject"
+              }
+            }
+          ]
         }
       }
     }

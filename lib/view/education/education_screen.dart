@@ -409,7 +409,7 @@ class _EducationScreenState extends State<EducationScreen> {
                           children: [
                             Expanded(
                               child: OutlinedButton(
-                                onPressed: () => Navigator.pop(context),
+                                onPressed: () => context.pop(),
                                 style: OutlinedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(14),
@@ -433,7 +433,7 @@ class _EducationScreenState extends State<EducationScreen> {
                                   titleController.clear();
                                   descController.clear();
 
-                                  Navigator.pop(context);
+                                  context.pop();
                                   setState(() {});
                                 },
                                 style: ElevatedButton.styleFrom(
