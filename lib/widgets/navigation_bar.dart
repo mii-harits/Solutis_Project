@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/view/education/education_screen.dart';
 import 'package:solutis_project/view/history/history_screen.dart';
@@ -41,38 +42,43 @@ class _NavBarWidgetState extends State<NavBarWidget> {
         Stack(
           clipBehavior: Clip.none,
           children: [
-            Icon(
-              icon,
-              color: active ? AppColor.teal2 : AppColor.grey2,
-              size: 28,
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              transform: Matrix4.translationValues(
+                0,
+                active ? -3 : 0, // 🔥 naik sedikit saat aktif
+                0,
+              ),
+              child: Icon(
+                icon,
+                color: active ? AppColor.teal2 : AppColor.grey2,
+                size: 26,
+              ),
             ),
             if (active)
               Positioned(
                 top: -6,
-                left: -30,
-                right: -30,
+                left: -35,
+                right: -35,
                 child: Container(
-                  height: 35, // tinggi kotak cahaya
+                  height: 50, // tinggi kotak cahaya
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        AppColor.teal2,
-                        AppColor.teal2.withOpacity(0.05),
-                        AppColor.teal2.withOpacity(0.04),
-                        AppColor.teal2.withOpacity(0.04),
-                        AppColor.teal2.withOpacity(0.03),
-                        AppColor.teal2.withOpacity(0.03),
-                        AppColor.teal2.withOpacity(0.03),
-                        AppColor.teal2.withOpacity(0.03),
-                        AppColor.teal2.withOpacity(0.03),
-                        AppColor.teal2.withOpacity(0.03),
-                        AppColor.teal2.withOpacity(0.03),
-                        AppColor.teal2.withOpacity(0.03),
-                        AppColor.teal2.withOpacity(0.03),
-                        AppColor.teal2.withOpacity(0.01),
+                        AppColor.teal2, // 🔥 garis tegas di atas
+                        AppColor.teal2.withOpacity(0.1),
+                        AppColor.teal2.withOpacity(0.15),
+                        AppColor.teal2.withOpacity(0.1),
                         Colors.transparent,
+                      ],
+                      stops: [
+                        0.05, // full solid
+                        0.0, // mulai fade
+                        0.0,
+                        0.4,
+                        0.9,
                       ],
                     ),
                     borderRadius: BorderRadius.circular(0),
@@ -88,17 +94,17 @@ class _NavBarWidgetState extends State<NavBarWidget> {
   @override
   Widget build(BuildContext context) {
     final icons = [
-      Icons.home_outlined,
-      Icons.menu_book_outlined,
-      Icons.history_outlined,
-      Icons.person_outline,
+      PhosphorIcons.house(),
+      PhosphorIcons.book(),
+      PhosphorIcons.clock(),
+      PhosphorIcons.user(),
     ];
 
     final activeIcons = [
-      Icons.home_rounded,
-      Icons.menu_book_rounded,
-      Icons.history_rounded,
-      Icons.person_rounded,
+      PhosphorIcons.house(PhosphorIconsStyle.fill),
+      PhosphorIcons.book(PhosphorIconsStyle.fill),
+      PhosphorIcons.clock(PhosphorIconsStyle.fill),
+      PhosphorIcons.user(PhosphorIconsStyle.fill),
     ];
 
     final labels = ['Beranda', 'Edukasi', 'Riwayat', 'Profil'];
@@ -108,10 +114,6 @@ class _NavBarWidgetState extends State<NavBarWidget> {
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: AppColor.white,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.05),
@@ -130,6 +132,8 @@ class _NavBarWidgetState extends State<NavBarWidget> {
           showUnselectedLabels: true,
           selectedItemColor: AppColor.teal2,
           unselectedItemColor: AppColor.grey2,
+          selectedFontSize: 12,
+          unselectedFontSize: 12,
           items: List.generate(4, (index) {
             return BottomNavigationBarItem(
               icon: _buildCustomNavItem(icons[index], false),

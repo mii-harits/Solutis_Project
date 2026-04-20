@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: emailController,
                         style: TextStyle(fontSize: 14),
                         decoration: decorationConstant(
-                          hintText: "Masukkan Email / Username",
+                          hintText: "Masukkan Email",
                           prefixIcon: Icon(
                             Icons.email_outlined,
                             color: AppColor.grey1,
@@ -303,7 +303,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           elevation: 2,
-                          minimumSize: const Size(double.infinity, 48),
+                          minimumSize: const Size(double.infinity, 47),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
