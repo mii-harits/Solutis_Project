@@ -156,10 +156,10 @@ class _EducationScreenState extends State<EducationScreen> {
                                                   : AppColor.teal,
                                             ),
 
-                                            SizedBox(width: 8),
+                                            SizedBox(width: 2),
 
                                             Text(
-                                              "Lifestyle",
+                                              "Gaya Hidup",
                                               style: TextStyle(
                                                 color: selectedIndex == 0
                                                     ? AppColor.white
@@ -198,7 +198,7 @@ class _EducationScreenState extends State<EducationScreen> {
                                                   : AppColor.teal,
                                             ),
 
-                                            SizedBox(width: 8),
+                                            SizedBox(width: 2),
 
                                             Text(
                                               "Penyakit",
@@ -240,7 +240,7 @@ class _EducationScreenState extends State<EducationScreen> {
                                                   : AppColor.teal,
                                             ),
 
-                                            SizedBox(width: 8),
+                                            SizedBox(width: 2),
 
                                             Text(
                                               "Obat",
@@ -357,7 +357,7 @@ class _EducationScreenState extends State<EducationScreen> {
                           items: [
                             DropdownMenuItem(
                               value: "lifestyle",
-                              child: Text("Lifestyle"),
+                              child: Text("Gaya Hidup"),
                             ),
                             DropdownMenuItem(
                               value: "penyakit",

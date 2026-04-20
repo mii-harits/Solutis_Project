@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "562520608317-pvf7salalf5pdssmkpshvrn6gk4pfv9i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ppkd.salutis",
+            "certificate_hash": "09ff26459c3c905025ec215b39d4c5e0dd029efb"
+          }
+        },
+        {
           "client_id": "562520608317-tvk2cc6pfghn0405kgdcfg5rucin2990.apps.googleusercontent.com",
           "client_type": 3
         }

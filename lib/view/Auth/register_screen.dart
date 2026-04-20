@@ -321,62 +321,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ),
                         ),
-
-                        // SizedBox(height: 12),
-
-                        // Row(
-                        //   children: [
-                        //     Expanded(
-                        //       child: Divider(
-                        //         thickness: 1.2,
-                        //         color: AppColor.grey2,
-                        //         // indent: 10,
-                        //         endIndent: 10,
-                        //       ),
-                        //     ),
-
-                        //     Text(
-                        //       "Atau Masuk Dengan",
-                        //       style: TextStyle(color: AppColor.grey1),
-                        //     ),
-
-                        //     Expanded(
-                        //       child: Divider(
-                        //         thickness: 1.2,
-                        //         color: AppColor.grey2,
-                        //         indent: 10,
-                        //         // endIndent: 10,
-                        //       ),
-                        //     ),
-                        //   ],
-                        // ),
-
-                        // SizedBox(height: 5),
-
-                        // SizedBox(
-                        //   width: double.infinity,
-                        //   child: ElevatedButton(
-                        //     onPressed: () {},
-                        //     child: Stack(
-                        //       children: [
-                        //         Positioned(
-                        //           left: 5,
-                        //           child: Image.asset(
-                        //             "assets/images/Google/Google Logo.png",
-                        //             width: 22,
-                        //             height: 22,
-                        //           ),
-                        //         ),
-                        //         Center(
-                        //           child: Text(
-                        //             "Login Dengan Google",
-                        //             style: TextStyle(color: Colors.black87),
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),

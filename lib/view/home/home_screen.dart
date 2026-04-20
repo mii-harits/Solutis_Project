@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:solutis_project/database/preference.dart';
+import 'package:solutis_project/models/disease_result_model.dart';
 import 'package:solutis_project/view/disease_analyst/first_analyst_screen.dart';
 import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/extension/navigator.dart';
@@ -15,6 +19,90 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool isUmum = true;
+  String greeting = "Selamat Datang,";
+  String username = "Pengguna";
+
+  List<DiseaseResultModel> recentResults = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadGreeting();
+    loadUsername();
+    loadRecentHistory();
+  }
+
+  void loadGreeting() async {
+    final hour = DateTime.now().hour;
+    bool hasEverLogin = await PreferenceHandler.getHasEverLogin();
+
+    print("hasEverLogin: $hasEverLogin");
+
+    String result;
+
+    if (!hasEverLogin) {
+      result = "Selamat Datang,";
+    } else if (hour >= 5 && hour < 11) {
+      result = "Selamat Pagi,";
+    } else if (hour >= 11 && hour < 15) {
+      result = "Selamat Siang,";
+    } else if (hour >= 15 && hour < 18) {
+      result = "Selamat Sore,";
+    } else {
+      result = "Selamat Malam,";
+    }
+
+    setState(() {
+      greeting = result;
+    });
+  }
+
+  Future<void> loadUsername() async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+
+      if (user == null) return;
+
+      final doc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+
+      if (doc.exists && doc.data()!.containsKey('username')) {
+        final name = doc['username'];
+
+        setState(() {
+          username = name.isNotEmpty ? name : "Pengguna";
+        });
+      } else {
+        setState(() {
+          username = "Pengguna";
+        });
+      }
+    } catch (e) {
+      print("Error ambil username: $e");
+    }
+  }
+
+  Future<void> loadRecentHistory() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final snapshot = await FirebaseFirestore.instance
+        .collection('history')
+        .where('userId', isEqualTo: user.uid)
+        .orderBy('createdAt', descending: true)
+        .limit(2) // ambil 2 terbaru
+        .get();
+
+    final data = snapshot.docs.map((doc) {
+      return DiseaseResultModel.fromMap(doc.data(), doc.id);
+    }).toList();
+
+    setState(() {
+      recentResults = data;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +121,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Selamat Datang,",
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          Text(
-                            "Muhammad Harits!",
-                            style: TextStyle(fontSize: 32),
-                          ),
+                          Text(greeting, style: TextStyle(fontSize: 16)),
+                          Text("$username!", style: TextStyle(fontSize: 32)),
                           Text(
                             "Bagaimana Kondisi Kesehatanmu\nHari Ini?",
                             style: TextStyle(fontSize: 16),
@@ -83,107 +165,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
 
-                // SizedBox(height: 15),
-
-                // LayoutBuilder(
-                //   builder: (context, constraints) {
-                //     double width = constraints.maxWidth;
-
-                //     return Container(
-                //       width: 250,
-                //       height: 40,
-                //       decoration: BoxDecoration(
-                //         color: AppColor.white,
-                //         borderRadius: BorderRadius.circular(20),
-                //         boxShadow: [
-                //           BoxShadow(
-                //             color: Colors.black.withOpacity(0.2),
-                //             blurRadius: 5,
-                //             offset: Offset(0, 4),
-                //           ),
-                //         ],
-                //       ),
-                //       child: Stack(
-                //         children: [
-                //           AnimatedAlign(
-                //             duration: Duration(milliseconds: 250),
-                //             curve: Curves.easeInOut,
-                //             alignment: isUmum
-                //                 ? Alignment.centerLeft
-                //                 : Alignment.centerRight,
-                //             child: Container(
-                //               width: width / 3,
-                //               margin: EdgeInsets.all(2.5),
-                //               decoration: BoxDecoration(
-                //                 gradient: LinearGradient(
-                //                   colors: [
-                //                     AppColor.teal.withOpacity(0.9),
-                //                     AppColor.teal3.withOpacity(0.7),
-                //                     AppColor.teal4.withOpacity(0.9),
-                //                   ],
-                //                   begin: Alignment(0, -1),
-                //                   end: Alignment(0.2, 1),
-                //                 ),
-                //                 borderRadius: BorderRadius.circular(20),
-                //               ),
-                //             ),
-                //           ),
-
-                //           Row(
-                //             children: [
-                //               Expanded(
-                //                 child: InkWell(
-                //                   borderRadius: BorderRadius.circular(20),
-                //                   onTap: () {
-                //                     setState(() {
-                //                       isUmum = true;
-                //                     });
-                //                   },
-                //                   child: Center(
-                //                     child: Text(
-                //                       "Mode Umum",
-                //                       style: TextStyle(
-                //                         color: isUmum
-                //                             ? Colors.white
-                //                             : Colors.black,
-                //                         fontWeight: isUmum
-                //                             ? FontWeight.bold
-                //                             : FontWeight.normal,
-                //                       ),
-                //                     ),
-                //                   ),
-                //                 ),
-                //               ),
-                //               Expanded(
-                //                 child: InkWell(
-                //                   borderRadius: BorderRadius.circular(20),
-                //                   onTap: () {
-                //                     setState(() {
-                //                       isUmum = false;
-                //                     });
-                //                   },
-                //                   child: Center(
-                //                     child: Text(
-                //                       "Mode Dokter",
-                //                       style: TextStyle(
-                //                         color: !isUmum
-                //                             ? Colors.white
-                //                             : Colors.black,
-                //                         fontWeight: !isUmum
-                //                             ? FontWeight.bold
-                //                             : FontWeight.normal,
-                //                       ),
-                //                     ),
-                //                   ),
-                //                 ),
-                //               ),
-                //             ],
-                //           ),
-                //         ],
-                //       ),
-                //     );
-                //   },
-                // ),
                 SizedBox(height: 20),
 
                 InkWell(
@@ -319,53 +300,44 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
 
                       SizedBox(height: 16),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: AppColor.teal.withOpacity(0.04),
-                        ),
-                        child: ListTile(
-                          leading: Container(
-                            height: 45,
-                            width: 45,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: AppColor.lightBlue.withOpacity(0.7),
+                      recentResults.isEmpty
+                          ? Text(
+                              "Belum ada riwayat",
+                              style: TextStyle(color: Colors.grey),
+                            )
+                          : Column(
+                              children: recentResults.map((r) {
+                                return Container(
+                                  margin: EdgeInsets.only(bottom: 10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: AppColor.teal.withOpacity(0.04),
+                                  ),
+                                  child: ListTile(
+                                    leading: Container(
+                                      height: 45,
+                                      width: 45,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(30),
+                                        color: AppColor.lightBlue.withOpacity(
+                                          0.7,
+                                        ),
+                                      ),
+                                      child: SvgPicture.asset(
+                                        "assets/icons/Home Icon/Heart.svg",
+                                        fit: BoxFit.scaleDown,
+                                      ),
+                                    ),
+                                    title: Text(r.complaint),
+                                    subtitle: Text(
+                                      "${r.createdAt.day.toString().padLeft(2, '0')}-"
+                                      "${r.createdAt.month.toString().padLeft(2, '0')}-"
+                                      "${r.createdAt.year}",
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
                             ),
-                            child: SvgPicture.asset(
-                              "assets/icons/Home Icon/Heart.svg",
-                              fit: BoxFit.scaleDown,
-                            ),
-                          ),
-                          title: Text("Demam dan Sakit Kepala"),
-                          subtitle: Text("2026-02-13"),
-                        ),
-                      ),
-
-                      SizedBox(height: 10),
-
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: AppColor.teal.withOpacity(0.04),
-                        ),
-                        child: ListTile(
-                          leading: Container(
-                            height: 45,
-                            width: 45,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
-                              color: AppColor.lightBlue.withOpacity(0.7),
-                            ),
-                            child: SvgPicture.asset(
-                              "assets/icons/Home Icon/Medicine.svg",
-                              fit: BoxFit.scaleDown,
-                            ),
-                          ),
-                          title: Text("Demam dan Sakit Kepala"),
-                          subtitle: Text("2026-02-13"),
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -437,7 +409,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   width: 25,
                                 ),
                                 Text(
-                                  "Lifestyle",
+                                  "Gaya Hidup",
                                   style: TextStyle(fontSize: 11),
                                 ),
                               ],

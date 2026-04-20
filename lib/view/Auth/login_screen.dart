@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/database/preference.dart';
@@ -271,6 +272,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             final user = await AuthService.signInWithGoogle();
 
                             if (user != null) {
+                              await FirebaseFirestore.instance
+                                  .collection('users')
+                                  .doc(user.uid)
+                                  .set({
+                                    'email': user.email,
+                                    'username': '',
+                                  }, SetOptions(merge: true));
+
                               SnackBarHelper.show(
                                 context,
                                 message: "Login Berhasil",
@@ -303,7 +312,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
                           elevation: 2,
-                          minimumSize: const Size(double.infinity, 47),
+                          minimumSize: const Size(double.infinity, 48),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
