@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/controller/disease_controller.dart';
+import 'package:solutis_project/extension/navigator.dart';
 import 'package:solutis_project/models/disease_result_model.dart';
 import 'package:solutis_project/view/disease_analyst/result_analyst_screen.dart';
 import 'package:solutis_project/widgets/box_decoration.dart';
@@ -188,13 +189,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             onDismissed: (_) => deleteResult(r.id!),
                             child: InkWell(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => ResultAnalystScreen(
-                                      result: r,
-                                      fromHistory: true,
-                                    ),
+                                context.push(
+                                  ResultAnalystScreen(
+                                    result: r,
+                                    fromHistory: true,
                                   ),
                                 );
                               },

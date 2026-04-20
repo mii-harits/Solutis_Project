@@ -44,6 +44,7 @@ class _FirstAnalystScreenState extends State<FirstAnalystScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColor.white,
       body: SafeArea(
         child: Padding(

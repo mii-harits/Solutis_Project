@@ -57,7 +57,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
             ),
             if (active)
               Positioned(
-                top: -6,
+                top: -8,
                 left: -35,
                 right: -35,
                 child: Container(
@@ -109,38 +109,49 @@ class _NavBarWidgetState extends State<NavBarWidget> {
 
     final labels = ['Beranda', 'Edukasi', 'Riwayat', 'Profil'];
 
-    return Scaffold(
-      body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: AppColor.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 8,
-              offset: const Offset(0, -2),
-            ),
-          ],
-        ),
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-          showSelectedLabels: true,
-          showUnselectedLabels: true,
-          selectedItemColor: AppColor.teal2,
-          unselectedItemColor: AppColor.grey2,
-          selectedFontSize: 12,
-          unselectedFontSize: 12,
-          items: List.generate(4, (index) {
-            return BottomNavigationBarItem(
-              icon: _buildCustomNavItem(icons[index], false),
-              activeIcon: _buildCustomNavItem(activeIcons[index], true),
-              label: labels[index],
-            );
-          }),
+    return WillPopScope(
+      onWillPop: () async {
+        if (_selectedIndex != 0) {
+          setState(() {
+            _selectedIndex = 0; // 🔥 balik ke Home
+          });
+          return false; // ❌ jangan keluar app
+        }
+        return true; // ✅ keluar app kalau sudah di Home
+      },
+      child: Scaffold(
+        body: _widgetOptions.elementAt(_selectedIndex),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: AppColor.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 8,
+                offset: const Offset(0, -2),
+              ),
+            ],
+          ),
+          child: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+            showSelectedLabels: true,
+            showUnselectedLabels: true,
+            selectedItemColor: AppColor.teal2,
+            unselectedItemColor: AppColor.grey2,
+            selectedFontSize: 12,
+            unselectedFontSize: 12,
+            items: List.generate(4, (index) {
+              return BottomNavigationBarItem(
+                icon: _buildCustomNavItem(icons[index], false),
+                activeIcon: _buildCustomNavItem(activeIcons[index], true),
+                label: labels[index],
+              );
+            }),
+          ),
         ),
       ),
     );

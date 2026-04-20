@@ -42,6 +42,7 @@ class _ThirdAnalystScreenState extends State<ThirdAnalystScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColor.white,
       body: SafeArea(
         child: Padding(

@@ -5,11 +5,13 @@ class EducationController {
   // ADD
   static Future<void> addEducation(
     String category,
+    String imageUrl,
     String title,
     String description,
   ) async {
     await EducationService.addEducation(
       category: category,
+      imageUrl: imageUrl,
       title: title,
       description: description,
     );
@@ -25,11 +27,13 @@ class EducationController {
     String id,
     String title,
     String description,
+    String imageUrl,
   ) async {
     await EducationService.updateEducation(
       id: id,
       title: title,
       description: description,
+      imageUrl: imageUrl,
     );
   }
 

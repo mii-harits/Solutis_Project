@@ -30,6 +30,7 @@ class _SecondAnalystScreenState extends State<SecondAnalystScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColor.white,
       body: SafeArea(
         child: Padding(

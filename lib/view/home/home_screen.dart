@@ -7,6 +7,9 @@ import 'package:solutis_project/models/disease_result_model.dart';
 import 'package:solutis_project/view/disease_analyst/first_analyst_screen.dart';
 import 'package:solutis_project/constant/app_color.dart';
 import 'package:solutis_project/extension/navigator.dart';
+import 'package:solutis_project/view/disease_analyst/result_analyst_screen.dart';
+import 'package:solutis_project/view/education/education_screen.dart';
+import 'package:solutis_project/view/home/notification_screen.dart';
 import 'package:solutis_project/widgets/box_decoration.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,6 +22,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool isUmum = true;
+  bool isLoadingHistory = true;
   String greeting = "Selamat Datang,";
   String username = "Pengguna";
 
@@ -88,20 +92,28 @@ class _HomeScreenState extends State<HomeScreen> {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
 
-    final snapshot = await FirebaseFirestore.instance
-        .collection('history')
-        .where('userId', isEqualTo: user.uid)
-        .orderBy('createdAt', descending: true)
-        .limit(2) // ambil 2 terbaru
-        .get();
+    try {
+      final snapshot = await FirebaseFirestore.instance
+          .collection('history')
+          .where('userId', isEqualTo: user.uid)
+          .orderBy('createdAt', descending: true)
+          .limit(2)
+          .get();
 
-    final data = snapshot.docs.map((doc) {
-      return DiseaseResultModel.fromMap(doc.data(), doc.id);
-    }).toList();
+      final data = snapshot.docs.map((doc) {
+        return DiseaseResultModel.fromMap(doc.data(), doc.id);
+      }).toList();
 
-    setState(() {
-      recentResults = data;
-    });
+      setState(() {
+        recentResults = data;
+        isLoadingHistory = false; // ✅ selesai load
+      });
+    } catch (e) {
+      print("ERROR: $e");
+      setState(() {
+        isLoadingHistory = false;
+      });
+    }
   }
 
   @override
@@ -136,7 +148,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         InkWell(
                           borderRadius: BorderRadius.circular(20),
                           onTap: () {
-                            setState(() {});
+                            setState(() {
+                              context.push(NotificationScreen());
+                            });
                           },
                           child: Container(
                             height: 45,
@@ -300,7 +314,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
 
                       SizedBox(height: 16),
-                      recentResults.isEmpty
+
+                      isLoadingHistory
+                          ? Center(child: CircularProgressIndicator())
+                          : recentResults.isEmpty
                           ? Text(
                               "Belum ada riwayat",
                               style: TextStyle(color: Colors.grey),
@@ -334,6 +351,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                       "${r.createdAt.month.toString().padLeft(2, '0')}-"
                                       "${r.createdAt.year}",
                                     ),
+                                    onTap: () {
+                                      context.push(
+                                        ResultAnalystScreen(
+                                          result: r,
+                                          fromHistory: true,
+                                        ),
+                                      );
+                                    },
                                   ),
                                 );
                               }).toList(),
@@ -389,81 +414,99 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            height: 75,
-                            width: 75,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: AppColor.lightBlueToGreen.withOpacity(
-                                0.15,
+                          InkWell(
+                            onTap: () {
+                              EducationScreen.selectedFromHome = "lifestyle";
+                              widget.onNavigate?.call(1);
+                            },
+                            child: Container(
+                              height: 75,
+                              width: 75,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: AppColor.lightBlueToGreen.withOpacity(
+                                  0.15,
+                                ),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/icons/Home Icon/Heartbeat.svg",
+                                    color: AppColor.teal,
+                                    height: 25,
+                                    width: 25,
+                                  ),
+                                  Text(
+                                    "Gaya Hidup",
+                                    style: TextStyle(fontSize: 11),
+                                  ),
+                                ],
                               ),
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  "assets/icons/Home Icon/Heartbeat.svg",
-                                  color: AppColor.teal,
-                                  height: 25,
-                                  width: 25,
-                                ),
-                                Text(
-                                  "Gaya Hidup",
-                                  style: TextStyle(fontSize: 11),
-                                ),
-                              ],
+                          ),
+
+                          SizedBox(width: 20),
+
+                          InkWell(
+                            onTap: () {
+                              EducationScreen.selectedFromHome = "penyakit";
+                              widget.onNavigate?.call(1);
+                            },
+                            child: Container(
+                              height: 75,
+                              width: 75,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: AppColor.blue2.withOpacity(0.15),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/icons/Home Icon/Heart.svg",
+                                    color: AppColor.blue,
+                                    height: 25,
+                                    width: 25,
+                                  ),
+                                  Text(
+                                    "Penyakit",
+                                    style: TextStyle(fontSize: 11),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
 
                           SizedBox(width: 20),
 
-                          Container(
-                            height: 75,
-                            width: 75,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: AppColor.blue2.withOpacity(0.15),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  "assets/icons/Home Icon/Heart.svg",
-                                  color: AppColor.blue,
-                                  height: 25,
-                                  width: 25,
-                                ),
-                                Text(
-                                  "Penyakit",
-                                  style: TextStyle(fontSize: 11),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          SizedBox(width: 20),
-
-                          Container(
-                            height: 75,
-                            width: 75,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: AppColor.purple.withOpacity(0.15),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  "assets/icons/Home Icon/Medicine.svg",
-                                  color: AppColor.purple2,
-                                  height: 25,
-                                  width: 25,
-                                ),
-                                Text("Obat", style: TextStyle(fontSize: 11)),
-                              ],
+                          InkWell(
+                            onTap: () {
+                              EducationScreen.selectedFromHome = "obat";
+                              widget.onNavigate?.call(1);
+                            },
+                            child: Container(
+                              height: 75,
+                              width: 75,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: AppColor.purple.withOpacity(0.15),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/icons/Home Icon/Medicine.svg",
+                                    color: AppColor.purple2,
+                                    height: 25,
+                                    width: 25,
+                                  ),
+                                  Text("Obat", style: TextStyle(fontSize: 11)),
+                                ],
+                              ),
                             ),
                           ),
                         ],
