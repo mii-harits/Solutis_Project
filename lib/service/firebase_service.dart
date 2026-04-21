@@ -67,4 +67,12 @@ class FirebaseService {
       'medicine': medicine,
     });
   }
+
+  static Future<UserModel> getUserData() async {
+    final uid = _auth.currentUser!.uid;
+
+    final doc = await _firebaseFirestore.collection('users').doc(uid).get();
+
+    return UserModel.fromMap(doc.data()!, doc.id);
+  }
 }

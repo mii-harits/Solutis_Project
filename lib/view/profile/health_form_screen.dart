@@ -18,7 +18,7 @@ class _HealthFormScreenState extends State<HealthFormScreen> {
 
   String bloodType = "A";
 
-  bool isLoading = false;
+  bool isLoading = true;
 
   Future<void> save() async {
     if (heightC.text.isEmpty || weightC.text.isEmpty) {
@@ -44,6 +44,21 @@ class _HealthFormScreenState extends State<HealthFormScreen> {
     if (mounted) {
       context.pop(true); // 🔥 kirim signal ke profile
     }
+  }
+
+  Future<void> loadData() async {
+    setState(() => isLoading = true);
+
+    final data = await FirebaseService.getUserData();
+
+    heightC.text = data.height.toString();
+    weightC.text = data.weight.toString();
+    diseaseC.text = data.diseaseHistory;
+    allergyC.text = data.allergy;
+    medicineC.text = data.medicine;
+    bloodType = data.bloodType.isNotEmpty ? data.bloodType : "A";
+
+    setState(() => isLoading = false);
   }
 
   Widget buildTextField({
@@ -96,6 +111,12 @@ class _HealthFormScreenState extends State<HealthFormScreen> {
       ),
       child: child,
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadData(); // 🔥 INI YANG KURANG
   }
 
   @override
@@ -183,7 +204,10 @@ class _HealthFormScreenState extends State<HealthFormScreen> {
                 ),
                 child: isLoading
                     ? const CircularProgressIndicator(color: Colors.white)
-                    : const Text("Simpan Data", style: TextStyle(fontSize: 16)),
+                    : const Text(
+                        "Simpan Data",
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
               ),
             ),
           ],

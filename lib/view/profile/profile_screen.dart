@@ -7,8 +7,11 @@ import 'package:solutis_project/database/preference.dart';
 import 'package:solutis_project/extension/navigator.dart';
 import 'package:solutis_project/models/user_model.dart';
 import 'package:solutis_project/service/google_auth_service.dart';
+import 'package:solutis_project/view/profile/account_settings_screen.dart';
 import 'package:solutis_project/view/profile/edit_profile_screen.dart';
 import 'package:solutis_project/view/profile/health_form_screen.dart';
+import 'package:solutis_project/view/profile/salutis_premium_screen.dart';
+import 'package:solutis_project/view/profile/security_privacy_screen.dart';
 import 'package:solutis_project/widgets/box_decoration.dart';
 import 'package:solutis_project/view/auth/login_screen.dart';
 
@@ -579,7 +582,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ),
                                         ),
                                         Text(
-                                          "Tidak ada riwayat penyakit",
+                                          userModel
+                                                      ?.diseaseHistory
+                                                      .isNotEmpty ==
+                                                  true
+                                              ? userModel!.diseaseHistory
+                                              : "Tidak ada riwayat penyakit",
                                           style: TextStyle(fontSize: 12),
                                         ),
                                       ],
@@ -604,7 +612,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ),
                                         ),
                                         Text(
-                                          "Tidak ada alergi bawaan",
+                                          userModel?.allergy.isNotEmpty == true
+                                              ? userModel!.allergy
+                                              : "Tidak ada alergi",
                                           style: TextStyle(fontSize: 12),
                                         ),
                                       ],
@@ -629,7 +639,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ),
                                         ),
                                         Text(
-                                          "Tidak ada obat rutin",
+                                          userModel?.medicine.isNotEmpty == true
+                                              ? userModel!.medicine
+                                              : "Tidak ada obat rutin",
                                           style: TextStyle(fontSize: 12),
                                         ),
                                       ],
@@ -669,129 +681,138 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                           SizedBox(height: 10),
 
-                          Container(
-                            padding: EdgeInsets.only(
-                              top: 10,
-                              bottom: 10,
-                              left: 16,
-                              right: 7,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: AppColor.grey2.withOpacity(0.08),
-                            ),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(
-                                  "assets/icons/Profile Icon/Settings Icon.svg",
-                                  color: AppColor.grey1,
-                                  height: 27,
-                                  width: 27,
-                                ),
-
-                                SizedBox(width: 10),
-
-                                Text(
-                                  "Pengaturan Akun",
-                                  style: TextStyle(color: AppColor.grey1),
-                                ),
-
-                                Spacer(),
-
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: AppColor.grey2,
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          SizedBox(height: 8),
-
-                          Container(
-                            padding: EdgeInsets.only(
-                              top: 10,
-                              bottom: 10,
-                              left: 16,
-                              right: 7,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: AppColor.grey2.withOpacity(0.08),
-                            ),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(
-                                  isOn
-                                      ? "assets/icons/Profile Icon/Sun.svg"
-                                      : "assets/icons/Profile Icon/Moon.svg",
-                                  height: 27,
-                                  width: 27,
-                                ),
-
-                                SizedBox(width: 10),
-
-                                Text(
-                                  isOn ? 'Mode Terang' : 'Mode Gelap',
-                                  style: TextStyle(color: AppColor.grey1),
-                                ),
-
-                                Spacer(),
-
-                                SizedBox(
-                                  height: 26,
-                                  child: Transform.scale(
-                                    scale: 0.8,
-                                    child: Switch(
-                                      value: isOn,
-                                      activeColor: AppColor.grey1,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          isOn = value;
-                                        });
-                                      },
-                                    ),
+                          InkWell(
+                            onTap: () {
+                              context.push(const AccountSettingsScreen());
+                            },
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                top: 10,
+                                bottom: 10,
+                                left: 16,
+                                right: 7,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: AppColor.grey2.withOpacity(0.08),
+                              ),
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/icons/Profile Icon/Settings Icon.svg",
+                                    color: AppColor.grey1,
+                                    height: 27,
+                                    width: 27,
                                   ),
-                                ),
-                              ],
+
+                                  SizedBox(width: 10),
+
+                                  Text(
+                                    "Pengaturan Akun",
+                                    style: TextStyle(color: AppColor.grey1),
+                                  ),
+
+                                  Spacer(),
+
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: AppColor.grey2,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
 
                           SizedBox(height: 8),
 
-                          Container(
-                            padding: EdgeInsets.only(
-                              top: 10,
-                              bottom: 10,
-                              left: 16,
-                              right: 7,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: AppColor.grey2.withOpacity(0.08),
-                            ),
-                            child: Row(
-                              children: [
-                                SvgPicture.asset(
-                                  "assets/icons/Profile Icon/Shield.svg",
-                                  height: 28,
-                                  width: 28,
-                                ),
+                          // Container(
+                          //   padding: EdgeInsets.only(
+                          //     top: 10,
+                          //     bottom: 10,
+                          //     left: 16,
+                          //     right: 7,
+                          //   ),
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(15),
+                          //     color: AppColor.grey2.withOpacity(0.08),
+                          //   ),
+                          //   child: Row(
+                          //     children: [
+                          //       SvgPicture.asset(
+                          //         isOn
+                          //             ? "assets/icons/Profile Icon/Sun.svg"
+                          //             : "assets/icons/Profile Icon/Moon.svg",
+                          //         height: 27,
+                          //         width: 27,
+                          //       ),
 
-                                SizedBox(width: 10),
+                          //       SizedBox(width: 10),
 
-                                Text(
-                                  "Keamanan dan Privasi",
-                                  style: TextStyle(color: AppColor.grey1),
-                                ),
+                          //       Text(
+                          //         isOn ? 'Mode Terang' : 'Mode Gelap',
+                          //         style: TextStyle(color: AppColor.grey1),
+                          //       ),
 
-                                Spacer(),
+                          //       Spacer(),
 
-                                Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: AppColor.grey2,
-                                ),
-                              ],
+                          //       SizedBox(
+                          //         height: 26,
+                          //         child: Transform.scale(
+                          //           scale: 0.8,
+                          //           child: Switch(
+                          //             value: isOn,
+                          //             activeColor: AppColor.grey1,
+                          //             onChanged: (value) {
+                          //               setState(() {
+                          //                 isOn = value;
+                          //               });
+                          //             },
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
+
+                          // SizedBox(height: 8),
+                          InkWell(
+                            onTap: () {
+                              context.push(const SecurityPrivacyScreen());
+                            },
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                top: 10,
+                                bottom: 10,
+                                left: 16,
+                                right: 7,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: AppColor.grey2.withOpacity(0.08),
+                              ),
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/icons/Profile Icon/Shield.svg",
+                                    height: 28,
+                                    width: 28,
+                                  ),
+
+                                  SizedBox(width: 10),
+
+                                  Text(
+                                    "Keamanan dan Privasi",
+                                    style: TextStyle(color: AppColor.grey1),
+                                  ),
+
+                                  Spacer(),
+
+                                  Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: AppColor.grey2,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -800,74 +821,82 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     SizedBox(height: 25),
 
-                    Container(
-                      padding: EdgeInsets.only(
-                        top: 16,
-                        bottom: 16,
-                        left: 24,
-                        right: 10,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        gradient: LinearGradient(
-                          colors: [
-                            AppColor.premiumColor,
-                            AppColor.premiumColor2,
-                            AppColor.premiumColor3,
-                          ],
-                          begin: Alignment(-0.029, -1),
-                          end: Alignment(0.03, 1),
+                    InkWell(
+                      onTap: () {
+                        context.push(const SalutisPremiumScreen());
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(
+                          top: 16,
+                          bottom: 16,
+                          left: 24,
+                          right: 10,
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColor.premiumColor3.withOpacity(0.5),
-                            blurRadius: 18,
-                            offset: Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 40,
-                            width: 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: AppColor.white.withOpacity(0.2),
-                            ),
-                            child: SvgPicture.asset(
-                              "assets/icons/Profile Icon/Crown.svg",
-                              fit: BoxFit.scaleDown,
-                            ),
-                          ),
-
-                          SizedBox(width: 17),
-
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Salutis Premium",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColor.white,
-                                ),
-                              ),
-                              Text(
-                                "Fitur lengkap tanpa batas",
-                                style: TextStyle(
-                                  color: AppColor.white,
-                                  fontSize: 12,
-                                ),
-                              ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          gradient: LinearGradient(
+                            colors: [
+                              AppColor.premiumColor,
+                              AppColor.premiumColor2,
+                              AppColor.premiumColor3,
                             ],
+                            begin: Alignment(-0.029, -1),
+                            end: Alignment(0.03, 1),
                           ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColor.premiumColor3.withOpacity(0.5),
+                              blurRadius: 18,
+                              offset: Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: AppColor.white.withOpacity(0.2),
+                              ),
+                              child: SvgPicture.asset(
+                                "assets/icons/Profile Icon/Crown.svg",
+                                fit: BoxFit.scaleDown,
+                              ),
+                            ),
 
-                          Spacer(),
+                            SizedBox(width: 17),
 
-                          Icon(Icons.arrow_forward_ios, color: AppColor.white),
-                        ],
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Salutis Premium",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColor.white,
+                                  ),
+                                ),
+                                Text(
+                                  "Fitur lengkap tanpa batas",
+                                  style: TextStyle(
+                                    color: AppColor.white,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            Spacer(),
+
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              color: AppColor.white,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
 
