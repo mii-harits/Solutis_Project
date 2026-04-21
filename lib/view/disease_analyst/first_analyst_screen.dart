@@ -35,6 +35,7 @@ class _FirstAnalystScreenState extends State<FirstAnalystScreen> {
   @override
   void initState() {
     super.initState();
+    print("FIRST SCREEN ID: ${widget.tempResult?.id}");
     if (widget.tempResult != null) {
       tempResult = widget.tempResult!;
       complaintController.text = tempResult.complaint;
@@ -218,7 +219,20 @@ class _FirstAnalystScreenState extends State<FirstAnalystScreen> {
           decoration: secondBoxDecorationConstant(),
           child: ElevatedButton(
             onPressed: () {
-              tempResult.complaint = complaintController.text; // simpan input
+              final complaint = complaintController.text.trim();
+
+              if (complaint.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Keluhan wajib diisi"),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+                return;
+              }
+
+              // kalau valid
+              tempResult.complaint = complaint;
               context.push(SecondAnalystScreen(tempResult: tempResult));
             },
             style: ElevatedButton.styleFrom(

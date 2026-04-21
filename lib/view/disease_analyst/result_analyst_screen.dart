@@ -351,98 +351,99 @@ class ResultAnalystScreen extends StatelessWidget {
 
                 SizedBox(height: 22),
 
-                Row(
-                  children: [
-                    Expanded(
-                      child: InkWell(
-                        onTap: () {
-                          context.push(FirstAnalystScreen(tempResult: result));
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: AppColor.teal),
-                            borderRadius: BorderRadius.circular(15),
-                            color: AppColor.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                blurRadius: 18,
-                                offset: Offset(0, 10),
-                              ),
-                            ],
-                          ),
-                          child: Center(
-                            child: Text(
-                              "Ubah",
-                              style: TextStyle(
-                                color: AppColor.teal,
-                                fontWeight: FontWeight.bold,
+                if (!fromHistory)
+                  Row(
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            context.push(
+                              FirstAnalystScreen(tempResult: result),
+                            );
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: AppColor.teal),
+                              borderRadius: BorderRadius.circular(15),
+                              color: AppColor.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 18,
+                                  offset: Offset(0, 10),
+                                ),
+                              ],
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Ubah",
+                                style: TextStyle(
+                                  color: AppColor.teal,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
 
-                    SizedBox(width: 8),
+                      SizedBox(width: 8),
 
-                    Expanded(
-                      child: InkWell(
-                        onTap: () async {
-                          // 1. Simpan data jika belum tersimpan
-                          if (result.id == null) {
-                            await controller.addResult(
-                              result,
-                            ); // simpan ke database
-                          } else {
-                            await controller.addResult(
-                              result,
-                            ); // kalau sudah ada, update
-                          }
+                      Expanded(
+                        child: InkWell(
+                          onTap: () async {
+                            DiseaseResultModel finalResult;
 
-                          // 2. Tampilkan notifikasi kalau mau
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                "Hasil analisis disimpan ke riwayat",
+                            if (result.id == null) {
+                              finalResult = await controller.addResult(
+                                result,
+                              ); // 🔥 ambil hasil + ID
+                            } else {
+                              await controller.updateResult(result);
+                              finalResult = result;
+                            }
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  "Hasil analisis disimpan ke riwayat",
+                                ),
                               ),
+                            );
+
+                            context.pushAndRemoveAll(
+                              NavBarWidget(initialIndex: 2),
+                            );
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: AppColor.teal),
+                              borderRadius: BorderRadius.circular(15),
+                              color: AppColor.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 18,
+                                  offset: Offset(0, 10),
+                                ),
+                              ],
                             ),
-                          );
-
-                          // 3. Navigasi ke History
-                          context.pushAndRemoveAll(
-                            NavBarWidget(initialIndex: 2),
-                          );
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: AppColor.teal),
-                            borderRadius: BorderRadius.circular(15),
-                            color: AppColor.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.2),
-                                blurRadius: 18,
-                                offset: Offset(0, 10),
-                              ),
-                            ],
-                          ),
-                          child: Center(
-                            child: Text(
-                              "Lihat Riwayat",
-                              style: TextStyle(
-                                color: AppColor.teal,
-                                fontWeight: FontWeight.bold,
+                            child: Center(
+                              child: Text(
+                                "Lihat Riwayat",
+                                style: TextStyle(
+                                  color: AppColor.teal,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
               ],
             ),
           ),

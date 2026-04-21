@@ -218,7 +218,7 @@ class _SecondAnalystScreenState extends State<SecondAnalystScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Riwayat Penyakit",
+                                    "Riwayat Penyakit (Opsional)",
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500,
@@ -282,8 +282,23 @@ class _SecondAnalystScreenState extends State<SecondAnalystScreen> {
           decoration: secondBoxDecorationConstant(),
           child: ElevatedButton(
             onPressed: () {
-              widget.tempResult.duration = durationController.text;
+              final duration = durationController.text.trim();
+
+              // VALIDASI WAJIB
+              if (duration.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Durasi gejala wajib diisi"),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+                return;
+              }
+
+              // kalau valid
+              widget.tempResult.duration = duration;
               widget.tempResult.history = historyController.text;
+
               context.push(ThirdAnalystScreen(tempResult: widget.tempResult));
             },
             style: ElevatedButton.styleFrom(

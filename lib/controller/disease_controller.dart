@@ -10,9 +10,18 @@ class DiseaseController {
     return await DiseaseService.getHistory(userId);
   }
 
-  // ADD
-  Future<void> addResult(DiseaseResultModel result) async {
-    await DiseaseService.saveResult(userId: userId, result: result);
+  // ADD (CREATE)
+  Future<DiseaseResultModel> addResult(DiseaseResultModel result) async {
+    final id = await DiseaseService.saveResult(userId: userId, result: result);
+
+    return result.copyWith(id: id); // 🔥 inject ID ke object
+  }
+
+  // UPDATE 🔥
+  Future<void> updateResult(DiseaseResultModel result) async {
+    if (result.id == null) return;
+
+    await DiseaseService.updateResult(id: result.id!, result: result);
   }
 
   // DELETE

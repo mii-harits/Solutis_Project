@@ -20,6 +20,7 @@ class ThirdAnalystScreen extends StatefulWidget {
 
 class _ThirdAnalystScreenState extends State<ThirdAnalystScreen> {
   final TextEditingController additionalController = TextEditingController();
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -154,7 +155,7 @@ class _ThirdAnalystScreenState extends State<ThirdAnalystScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Kondisi Tambahan",
+                                      "Kondisi Tambahan (Opsional)",
                                       style: TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500,
@@ -219,6 +220,11 @@ class _ThirdAnalystScreenState extends State<ThirdAnalystScreen> {
           decoration: secondBoxDecorationConstant(),
           child: ElevatedButton(
             onPressed: () async {
+              setState(() => isLoading = true);
+
+              await Future.delayed(
+                Duration(milliseconds: 1200),
+              ); // efek loading
               // 🔥 ambil data dari Firebase
               final diseases = await DiseaseService.getDiseases();
 
@@ -273,7 +279,9 @@ class _ThirdAnalystScreenState extends State<ThirdAnalystScreen> {
                 severity = "Ringan";
               }
 
+              print("THIRD SCREEN (BEFORE) ID: ${widget.tempResult.id}");
               final result = widget.tempResult.copyWith(
+                additionalInfo: additionalController.text,
                 diseaseName: diseaseName,
                 mainSymptoms: symptoms,
                 otherSymptoms: bestMatch == null
@@ -286,9 +294,12 @@ class _ThirdAnalystScreenState extends State<ThirdAnalystScreen> {
                 confidence: confidence,
               );
 
+              print("THIRD SCREEN (AFTER) ID: ${result.id}");
+
               final controller = DiseaseController();
               await controller.addResult(result); // 🔥 SAVE DI SINI
 
+              setState(() => isLoading = false);
               context.push(ResultAnalystScreen(result: result));
             },
             style: ElevatedButton.styleFrom(
@@ -297,27 +308,34 @@ class _ThirdAnalystScreenState extends State<ThirdAnalystScreen> {
               elevation: 0,
               padding: EdgeInsets.zero,
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.assignment_outlined,
-                  color: AppColor.white,
-                  size: 20,
-                ),
-
-                SizedBox(width: 6),
-
-                Text(
-                  "Lihat Hasil",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17,
-                    color: AppColor.white,
+            child: isLoading
+                ? SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: AppColor.white,
+                    ),
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.assignment_outlined,
+                        color: AppColor.white,
+                        size: 20,
+                      ),
+                      SizedBox(width: 6),
+                      Text(
+                        "Lihat Hasil",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                          color: AppColor.white,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
           ),
         ),
       ),

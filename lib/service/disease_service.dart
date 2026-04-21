@@ -15,14 +15,16 @@ class DiseaseService {
   }
 
   // SAVE RESULT
-  static Future<void> saveResult({
+  static Future<String> saveResult({
     required String userId,
     required DiseaseResultModel result,
   }) async {
-    await _firestore.collection('history').add({
+    final doc = await _firestore.collection('history').add({
       'userId': userId,
       ...result.toMap(),
     });
+
+    return doc.id; // 🔥 return ID
   }
 
   // GET HISTORY
@@ -35,6 +37,13 @@ class DiseaseService {
     return snapshot.docs.map((doc) {
       return DiseaseResultModel.fromMap(doc.data(), doc.id);
     }).toList();
+  }
+
+  static Future<void> updateResult({
+    required String id,
+    required DiseaseResultModel result,
+  }) async {
+    await _firestore.collection('history').doc(id).update({...result.toMap()});
   }
 
   // DELETE
