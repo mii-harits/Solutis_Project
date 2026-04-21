@@ -47,4 +47,24 @@ class FirebaseService {
 
     return UserModel.fromMap(doc.data()!, doc.id);
   }
+
+  static Future<void> updateHealthData({
+    required double height,
+    required double weight,
+    required String bloodType,
+    required String diseaseHistory,
+    required String allergy,
+    required String medicine,
+  }) async {
+    final uid = _auth.currentUser!.uid;
+
+    await _firebaseFirestore.collection('users').doc(uid).update({
+      'height': height,
+      'weight': weight,
+      'bloodType': bloodType,
+      'diseaseHistory': diseaseHistory,
+      'allergy': allergy,
+      'medicine': medicine,
+    });
+  }
 }
