@@ -201,14 +201,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      userModel?.username ?? "Pengguna",
-                                      style: TextStyle(fontSize: 20),
+                                      (userModel?.username != null &&
+                                              userModel!.username
+                                                  .trim()
+                                                  .isNotEmpty)
+                                          ? userModel!.username
+                                          : "Pengguna Baru",
+                                      style: TextStyle(fontSize: 19),
                                     ),
+                                    SizedBox(height: 4),
                                     Text(
                                       userModel?.email ?? "-",
                                       style: TextStyle(
                                         color: AppColor.grey1,
-                                        fontSize: 14,
+                                        fontSize: 15,
                                       ),
                                     ),
                                   ],
@@ -725,56 +731,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                           SizedBox(height: 8),
 
-                          // Container(
-                          //   padding: EdgeInsets.only(
-                          //     top: 10,
-                          //     bottom: 10,
-                          //     left: 16,
-                          //     right: 7,
-                          //   ),
-                          //   decoration: BoxDecoration(
-                          //     borderRadius: BorderRadius.circular(15),
-                          //     color: AppColor.grey2.withOpacity(0.08),
-                          //   ),
-                          //   child: Row(
-                          //     children: [
-                          //       SvgPicture.asset(
-                          //         isOn
-                          //             ? "assets/icons/Profile Icon/Sun.svg"
-                          //             : "assets/icons/Profile Icon/Moon.svg",
-                          //         height: 27,
-                          //         width: 27,
-                          //       ),
+                          Container(
+                            padding: EdgeInsets.only(
+                              top: 10,
+                              bottom: 10,
+                              left: 16,
+                              right: 7,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: AppColor.grey2.withOpacity(0.08),
+                            ),
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  isOn
+                                      ? "assets/icons/Profile Icon/Sun.svg"
+                                      : "assets/icons/Profile Icon/Moon.svg",
+                                  height: 27,
+                                  width: 27,
+                                ),
 
-                          //       SizedBox(width: 10),
+                                SizedBox(width: 10),
 
-                          //       Text(
-                          //         isOn ? 'Mode Terang' : 'Mode Gelap',
-                          //         style: TextStyle(color: AppColor.grey1),
-                          //       ),
+                                Text(
+                                  isOn ? 'Mode Terang' : 'Mode Gelap',
+                                  style: TextStyle(color: AppColor.grey1),
+                                ),
 
-                          //       Spacer(),
+                                Spacer(),
 
-                          //       SizedBox(
-                          //         height: 26,
-                          //         child: Transform.scale(
-                          //           scale: 0.8,
-                          //           child: Switch(
-                          //             value: isOn,
-                          //             activeColor: AppColor.grey1,
-                          //             onChanged: (value) {
-                          //               setState(() {
-                          //                 isOn = value;
-                          //               });
-                          //             },
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
+                                SizedBox(
+                                  height: 26,
+                                  child: Transform.scale(
+                                    scale: 0.8,
+                                    child: Switch(
+                                      value: isOn,
+                                      activeColor: AppColor.grey1,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isOn = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
 
-                          // SizedBox(height: 8),
+                          SizedBox(height: 8),
+
                           InkWell(
                             onTap: () {
                               context.push(const SecurityPrivacyScreen());
