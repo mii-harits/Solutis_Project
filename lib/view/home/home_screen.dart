@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isUmum = true;
   bool isLoadingHistory = true;
   String greeting = "Selamat Datang,";
-  String username = "Pengguna";
+  String username = "Sobat Sehat";
 
   List<DiseaseResultModel> recentResults = [];
 
@@ -76,11 +76,11 @@ class _HomeScreenState extends State<HomeScreen> {
         final name = doc['username'];
 
         setState(() {
-          username = name.isNotEmpty ? name : "Pengguna";
+          username = name.isNotEmpty ? name : "Sobat Sehat";
         });
       } else {
         setState(() {
-          username = "Pengguna";
+          username = "Sobat Sehat";
         });
       }
     } catch (e) {
